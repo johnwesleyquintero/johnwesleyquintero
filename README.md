@@ -4,18 +4,42 @@
 
 ---
 
-## 🚀 Current Project: WesDev Analytics
+## 🚀 **Current Project: PPC and SEO Dashboard**  
+[<img src="https://myamazonguy.com/wp-content/uploads/2024/04/My-Amazon-Guy-Logo.png" alt="My Amazon Guy" width="100px">](https://myamazonguy.com)  
 
-I'm developing **WesDev Analytics**, a suite of tools designed to streamline data analysis and empower users without requiring coding expertise.
+I’m developing a powerful suite of tools and dashboards to **simplify data analysis** and empower users to optimize their PPC and SEO campaigns effectively — no coding required.  
 
-**Key Features:**
+### **Key Features**  
 
-- **Basic CSV Merger Tool:** Merge multiple CSV files effortlessly.
-- **Advanced Merging Tool:** Perform SQL-like operations for advanced data merging.
-- **Keyword Analyzer:** Optimize SEO and discover high-potential keywords.
-- **CTR Opportunity Matrix:** Visualize and act on CTR and CVR improvement scenarios.
+- **📂 CSV File Automation**:  
+  Automate the loading and merging of campaign and search query data for seamless integration.  
 
-[Explore the Project](https://github.com/WesDEV-2024/data-suite)
+- **📊 Data Cleaning**:  
+  Standardize and clean data by handling missing values, renaming columns, converting data types, and removing duplicates.  
+
+- **📈 Performance Metrics Calculation**:  
+  Automatically calculate key performance metrics like CTR, CVR, ACoS, ROAS, and AOV to visualize campaign effectiveness.  
+
+- **🔍 Keyword Analyzer and ASIN Mapping**:  
+  Optimize keyword strategies with detailed performance analysis and map search queries to ASINs for better targeting.  
+
+- **📋 Data Aggregation**:  
+  Aggregate campaign and query data across dimensions like Date, Week, Month, Quarter, and Year for deeper insights.  
+
+- **📤 Exporting Data**:  
+  Save cleaned and aggregated data into ready-to-use CSV files for visualization in Looker Studio or other BI tools.  
+
+[🔍 **Explore the Project**](https://github.com/johnwesleyquintero/MAG-FRAMEWORKS/blob/main/README.md)  
+
+---
+
+### **How It Helps**  
+
+With this project, users can:  
+1. Automate repetitive data preparation tasks.  
+2. Gain actionable insights into their PPC and SEO campaigns.  
+3. Easily link processed data to Looker Studio dashboards for advanced visualizations.  
+
 
 ---
 
@@ -42,7 +66,6 @@ I'm developing **WesDev Analytics**, a suite of tools designed to streamline dat
 
 - **Email:** [johnwesleyquintero@gmail.com](mailto:johnwesleyquintero@gmail.com)
 - **LinkedIn:** [linkedin.com/in/wesdev-analytics](www.linkedin.com/in/wesdev-analytics)
-- **Twitter:** [@WesDEV_2024](https://twitter.com/)
 
 ---
 
