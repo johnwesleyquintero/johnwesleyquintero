@@ -29,7 +29,7 @@ I’m developing a powerful suite of tools and dashboards to **simplify data ana
 - **📤 Exporting Data**:  
   Save cleaned and aggregated data into ready-to-use CSV files for visualization in Looker Studio or other BI tools.  
 
-[🔍 **Explore the Project**](https://github.com/johnwesleyquintero/MAG-FRAMEWORKS/blob/main/README.md)  
+[🔍 **Explore the Project**](https://github.com/johnwesleyquintero/myamzframework/blob/main/README.md)  
 
 ---
 
@@ -58,7 +58,7 @@ With this project, users can:
 
 ## 📈 GitHub Stats
 
-![WesDEV's GitHub stats](https://github-readme-stats.vercel.app/api?username=WesDEV-2024&show_icons=true&theme=radical)
+![WesDEV's GitHub stats](https://github-readme-stats.vercel.app/api?username=johnwesleyquintero&show_icons=true&theme=radical)
 
 ---
 
