@@ -5,7 +5,8 @@
 ---
 
 ## 🚀 **Current Project: PPC and SEO Dashboard**  
-[![My Amazon Guy](https://myamazonguy.com/wp-content/uploads/2024/04/My-Amazon-Guy-Logo.png)](https://myamazonguy.com)  
+
+![My Amazon Hub](https://github.com/user-attachments/assets/9d3684ff-287b-4651-a35f-8930c0accdc5)
 
 I’m developing a powerful suite of tools and dashboards to **simplify data analysis** and empower users to optimize their PPC and SEO campaigns effectively — no coding required.  
 
