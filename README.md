@@ -5,7 +5,7 @@
 ---
 
 ## 🚀 **Current Project: PPC and SEO Dashboard**  
-[<img src="https://myamazonguy.com/wp-content/uploads/2024/04/My-Amazon-Guy-Logo.png" alt="My Amazon Guy" width="100px">](https://myamazonguy.com)  
+[![My Amazon Guy](https://myamazonguy.com/wp-content/uploads/2024/04/My-Amazon-Guy-Logo.png)](https://myamazonguy.com)  
 
 I’m developing a powerful suite of tools and dashboards to **simplify data analysis** and empower users to optimize their PPC and SEO campaigns effectively — no coding required.  
 
@@ -40,7 +40,6 @@ With this project, users can:
 2. Gain actionable insights into their PPC and SEO campaigns.  
 3. Easily link processed data to Looker Studio dashboards for advanced visualizations.  
 
-
 ---
 
 ## 🛠️ Technologies & Tools
@@ -65,7 +64,7 @@ With this project, users can:
 ## 📫 Let's Connect
 
 - **Email:** [johnwesleyquintero@gmail.com](mailto:johnwesleyquintero@gmail.com)
-- **LinkedIn:** [linkedin.com/in/wesdev-analytics](www.linkedin.com/in/wesdev-analytics)
+- **LinkedIn:** [linkedin.com/in/wesdev-analytics](https://www.linkedin.com/in/wesdev-analytics)
 
 ---
 
@@ -73,5 +72,5 @@ With this project, users can:
 
 ---
 
-"The world is a system. Decode it, and you unlock your potential." -- Wesley Quintero
+_"The world is a system. Decode it, and you unlock your potential." — Wesley Quintero_
 
