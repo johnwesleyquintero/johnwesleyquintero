@@ -3,10 +3,8 @@
 **Empowering Businesses with Data-Driven Insights**
 
 ---
-
-## 🚀 **Current Project: PPC and SEO Dashboard**  
-
-![My Amazon Hub](https://github.com/user-attachments/assets/9d3684ff-287b-4651-a35f-8930c0accdc5)
+ 
+# ![My Amazon Hub](https://github.com/user-attachments/assets/9d3684ff-287b-4651-a35f-8930c0accdc5)   **Current Project: PPC and SEO Dashboard** 
 
 I’m developing a powerful suite of tools and dashboards to **simplify data analysis** and empower users to optimize their PPC and SEO campaigns effectively — no coding required.  
 
