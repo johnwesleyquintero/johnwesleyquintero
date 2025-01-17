@@ -3,41 +3,47 @@
 **Empowering Businesses with Data-Driven Insights**
 
 ---
- 
-# [![My Amazon Hub](https://github.com/user-attachments/assets/9d3684ff-287b-4651-a35f-8930c0accdc5)](https://sites.google.com/view/my-amz-hub/home)  **Current Project: PPC and SEO Dashboard** 
 
-I’m developing a powerful suite of tools and dashboards to **simplify data analysis** and empower users to optimize their PPC and SEO campaigns effectively — no coding required.  
+# [![My Amazon Hub](https://github.com/user-attachments/assets/9d3684ff-287b-4651-a35f-8930c0accdc5)](https://sites.google.com/view/my-amz-hub/home)  
+## **Current Project: My AMZ SaaS Platform**
 
-### **Key Features**  
+I’m developing a **scalable SaaS platform** tailored to Amazon brand managers to **simplify data reporting and analysis**, helping users save time and boost sales for their clients.
+
+### **Key Features of the Prototype**
 
 - **📂 CSV File Automation**:  
-  Automate the loading and merging of campaign and search query data for seamless integration.  
+  Seamlessly load, merge, and validate Amazon campaign and search query reports.  
 
-- **📊 Data Cleaning**:  
-  Standardize and clean data by handling missing values, renaming columns, converting data types, and removing duplicates.  
+- **📊 Data Cleaning and Aggregation**:  
+  Standardize data by handling missing values, renaming columns, and removing duplicates. Aggregate data by dimensions like Date, Week, Month, Quarter, and Year.
 
-- **📈 Performance Metrics Calculation**:  
-  Automatically calculate key performance metrics like CTR, CVR, ACoS, ROAS, and AOV to visualize campaign effectiveness.  
+- **📈 Automated Metrics Calculation**:  
+  Calculate critical performance metrics such as CTR, CVR, ACoS, ROAS, and Total Sales.  
 
-- **🔍 Keyword Analyzer and ASIN Mapping**:  
-  Optimize keyword strategies with detailed performance analysis and map search queries to ASINs for better targeting.  
+- **🔍 Keyword Analyzer and ASIN Insights**:  
+  Optimize keyword strategies with performance analysis and map search queries to ASINs for better targeting.  
 
-- **📋 Data Aggregation**:  
-  Aggregate campaign and query data across dimensions like Date, Week, Month, Quarter, and Year for deeper insights.  
+- **📋 Competitor Benchmarking**:  
+  Compare performance metrics to competitors for actionable insights.
 
-- **📤 Exporting Data**:  
-  Save cleaned and aggregated data into ready-to-use CSV files for visualization in Looker Studio or other BI tools.  
+- **📤 Export Clean Data**:  
+  Provide processed data as CSVs for visualization in BI tools like Looker Studio.  
 
-[🔍 **Explore the Project**](https://github.com/johnwesleyquintero/myamzframework/blob/main/README.md)  
+- **📋 Custom Reporting**:  
+  Generate tailored reports with actionable recommendations for optimizing campaigns.
 
 ---
 
-### **How It Helps**  
+### **How This Project Helps Amazon Brand Managers**
 
-With this project, users can:  
-1. Automate repetitive data preparation tasks.  
-2. Gain actionable insights into their PPC and SEO campaigns.  
-3. Easily link processed data to Looker Studio dashboards for advanced visualizations.  
+- **🚀 Save Time**:  
+  Automate repetitive tasks like data merging, cleaning, and analysis.  
+
+- **📊 Gain Insights**:  
+  Unlock actionable data to improve PPC and SEO campaign performance.  
+
+- **📈 Boost Sales**:  
+  Drive data-backed strategies to optimize ad spend and maximize ROI.  
 
 ---
 
@@ -67,9 +73,10 @@ With this project, users can:
 
 ---
 
-*Passionate about turning data into actionable insights and building tools that make a difference.*
+### Acknowledgments
+
+This project framework was enhanced with valuable support and insights from [ChatGPT](https://openai.com/chatgpt), helping refine and optimize the development strategy.
 
 ---
 
-_"The world is a system. Decode it, and you unlock your potential." — Wesley Quintero_
-
+*"The world is a system. Decode it, and you unlock your potential." — Wesley Quintero*
