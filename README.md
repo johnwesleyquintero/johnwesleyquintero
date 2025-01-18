@@ -5,9 +5,9 @@
 ---
 
 # [![My Amazon Hub](https://github.com/user-attachments/assets/9d3684ff-287b-4651-a35f-8930c0accdc5)](https://sites.google.com/view/my-amz-hub/home)  
-## **Current Project: My AMZ SaaS Platform**
+## **Current Project: A SaaS-like Platform**
 
-I’m developing a **scalable SaaS platform** tailored to Amazon brand managers to **simplify data reporting and analysis**, helping users save time and boost sales for their clients.
+I’m developing a **scalable SaaS-like platform** tailored to Amazon brand managers to **simplify data reporting and analysis**, helping users save time and boost sales for their clients.
 
 ### **Key Features of the Prototype**
 
