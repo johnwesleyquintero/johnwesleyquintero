@@ -35,7 +35,7 @@ I'm a passionate developer and data-driven problem solver, building powerful aut
 🔹 **Tech Stack** – Powered by **React, TypeScript, Tailwind CSS, and Chart.js** for interactive visualizations.  
 🔹 **Actionable Insights** – Helps sellers optimize ad spend, track KPIs, and grow their business.  
 
-💡 _Originally built as part of my work at My Amazon Guy, I’m expanding this into a portfolio project to make it fully functional as I've planned to address reporting and analytics meets data integrity._ 
+💡 _Originally built as part of my work at My Amazon Guy, I’m expanding this into a portfolio project to make it fully functional as I've planned to address reporting and analytics seamlessly and at the same time ensures robust data integrity._ 
 
 📌 **Repo:** [**github.com/johnwesleyquintero/my-amazon-analytics**](https://github.com/johnwesleyquintero/my-amazon-analytics)  
 
