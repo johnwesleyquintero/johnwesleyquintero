@@ -2,7 +2,7 @@
 
 #  Hello, I'm **Wesley Quintero**!  
 
-I'm a passionate developer and data-driven problem solver, building powerful automation tools, analytics dashboards, and AI-driven solutions. My goal? To create software that doesn’t just function—it **drives impact**.  
+I'm an aspiring developer and data-driven problem solver, building powerful automation tools, analytics dashboards, and AI-driven solutions. My goal? To create software that doesn’t just function—it **drives impact**.  
 
 ---
 
