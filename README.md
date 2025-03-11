@@ -93,8 +93,9 @@ Big thanks to the **open-source community** for their continuous contributions, 
 ---
 
 > _"The world is a system. Decode it, and you unlock your potential."_  
-> — **Wesley Quintero**  
+>  
 
 > _"From helpless to helper" – that’s where I started, and that’s where I’m going._  
 
+> — **Wesley Quintero** 
 ---
