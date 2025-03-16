@@ -1,10 +1,10 @@
----
+******
 
 #  Hello, I'm **Wesley Quintero**!  
 
 I'm an aspiring developer and data-driven problem solver, building powerful automation tools, analytics dashboards, and AI-driven solutions. My goal? To create software that doesn’t just function—it **drives impact**.  
 
----
+******
 
 ## **🌟 Current Project: My Amazon Analytics**  
 
@@ -26,7 +26,7 @@ I'm an aspiring developer and data-driven problem solver, building powerful auto
   📄 **[Documentation](https://xxxxxxx)** | 🐞 **[Report a Bug](https://github.com/johnwesleyquintero/my-amazon-analytics/issues)** | 💡 **[Request a Feature](https://github.com/johnwesleyquintero/my-amazon-analytics/issues)**  
 </div>  
 
----
+******
 
 ## **📊 Project Overview**  
 
@@ -39,7 +39,7 @@ I'm an aspiring developer and data-driven problem solver, building powerful auto
 
 📌 **Repo:** [**github.com/johnwesleyquintero/my-amazon-analytics**](https://github.com/johnwesleyquintero/my-amazon-analytics)  
 
----
+******
 
 <div align="center">
   <img src="/public/logo.svg" alt="Logo" width="200" />
@@ -73,7 +73,8 @@ My professional portfolio website specializing in Amazon development and e-comme
 *   Description: My demo app built with Vercel
 
 📌 **Repo:** [**github.com/johnwesleyquintero/portfolio**](https://github.com/johnwesleyquintero/portfolio) 
----
+
+******
 
 ## **🎯 Why This Matters (Beyond the Code)**  
 
