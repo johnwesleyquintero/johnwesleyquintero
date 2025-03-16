@@ -41,6 +41,40 @@ I'm an aspiring developer and data-driven problem solver, building powerful auto
 
 ---
 
+<div align="center">
+  <img src="/public/logo.svg" alt="Logo" width="200" />
+  <h1 style="background: linear-gradient(135deg, #059669 0%, #06b6d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 20px 0;">Amazon Specialist/Developer Portfolio with Astro</h1>
+  <div style="height: 4px; background: linear-gradient(90deg, #059669 0%, #06b6d4 100%); margin: 0 auto 20px; width: 60%;"></div>
+</div>
+
+<div style="background: linear-gradient(135deg, #05966920 0%, #06b6d420 100%); padding: 1.5rem; border-radius: 8px; margin: 2rem 0;">
+<h2 style="color: #059669; margin-bottom: 1rem;">Project Overview</h2>
+
+
+My professional portfolio website specializing in Amazon development and e-commerce solutions. The portfolio should highlight your technical expertise, showcase your projects, and provide a platform for potential clients to engage with your work. Use Astro as the primary framework to build a fast and efficient site.
+
+</div>
+
+<div style="background: linear-gradient(135deg, #05966920 0%, #06b6d420 100%); padding: 1.5rem; border-radius: 8px; margin: 2rem 0;">
+<h2 style="color: #06b6d4; margin-bottom: 1rem;">Key Features</h2>
+
+
+### Hero Section
+
+*   Include a professional headshot with dynamic animations.
+*   Write a specialized bio focusing on your Amazon development expertise.
+*   Add call-to-action buttons for project consultations.
+*   Provide links to your professional networks (GitHub, LinkedIn, AWS Certifications).
+
+
+#### Demo App
+
+*   Link to the live demo: https://wesleyquintero-dev.vercel.app/
+*   Description: My demo app built with Vercel
+
+📌 **Repo:** [**github.com/johnwesleyquintero/portfolio**](https://github.com/johnwesleyquintero/portfolio) 
+---
+
 ## **🎯 Why This Matters (Beyond the Code)**  
 
 ✅ **Scalability** – Ensures all Nebula projects follow best practices for long-term growth.  
