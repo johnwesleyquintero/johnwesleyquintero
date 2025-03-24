@@ -61,7 +61,7 @@ The portfolio is designed to be easily customizable and maintainable, making it 
 
 ## **🎯 Why This Matters (Beyond the Code)**  
 
-✅ **Scalability** – Ensures all Nebula projects follow best practices for long-term growth.  
+✅ **Scalability** – Ensures all my projects follow best practices for long-term growth.  
 ✅ **Efficiency** – Reduces onboarding time and enhances team productivity.  
 ✅ **Quality** – Promotes clean architecture, maintainability, and robust performance.  
 
