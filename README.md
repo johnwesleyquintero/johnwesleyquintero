@@ -107,9 +107,9 @@ The portfolio is designed to be easily customizable and maintainable, making it 
 | Certifications    | [View Certifications](https://www.linkedin.com/in/wesleyquintero/details/certifications/) |
 | GitHub            | [View Repository](https://github.com/johnwesleyquintero)               |
 | Portfolio         | [View Portfolio](https://wesleyquintero.vercel.app/)                   |
-| Documentation     | [View Documentation](https://sellsmart-docs.vercel.app/)              |
-| Main Web App      | [View Main Web App](https://sellsmart-hub.vercel.app/)                |
-| DevFlowDB         [View DevFlowDB](Uhttps://devflowdb.vercel.app//)   
+| SellSmart Docs     | [View Documentation](https://sellsmart-docs.vercel.app/)              |
+| SellSmart Hub      | [View Main Web App](https://sellsmart-hub.vercel.app/)                |
+| DevFlowDB         | [View DevFlowDB](Uhttps://devflowdb.vercel.app//)                     |
 
 ---
 
