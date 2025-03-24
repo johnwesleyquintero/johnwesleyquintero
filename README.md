@@ -99,10 +99,7 @@ The portfolio is designed to be easily customizable and maintainable, making it 
 ## **📫 Let's Connect**  
 
 📧 **Email:** [johnwesleyquintero@gmail.com](mailto:johnwesleyquintero@gmail.com)  
-💼 **LinkedIn:** [linkedin.com/in/wesleyquintero](https://www.linkedin.com/in/wesleyquintero)  
 📺 **YouTube:** [@nebula-singularity](https://www.youtube.com/@nebula-singularity)  
-
-## Professional Links
 
 | **Platform**       | **URL**                                                                 |
 |--------------------|-------------------------------------------------------------------------|
@@ -112,6 +109,7 @@ The portfolio is designed to be easily customizable and maintainable, making it 
 | Portfolio         | [View Portfolio](https://wesleyquintero.vercel.app/)                   |
 | Documentation     | [View Documentation](https://sellsmart-docs.vercel.app/)              |
 | Main Web App      | [View Main Web App](https://sellsmart-hub.vercel.app/)                |
+| DevFlowDB         [View DevFlowDB](Uhttps://devflowdb.vercel.app//)   
 
 ---
 
