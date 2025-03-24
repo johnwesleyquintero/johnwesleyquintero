@@ -102,6 +102,17 @@ The portfolio is designed to be easily customizable and maintainable, making it 
 💼 **LinkedIn:** [linkedin.com/in/wesleyquintero](https://www.linkedin.com/in/wesleyquintero)  
 📺 **YouTube:** [@nebula-singularity](https://www.youtube.com/@nebula-singularity)  
 
+## Professional Links
+
+| **Platform**       | **URL**                                                                 |
+|--------------------|-------------------------------------------------------------------------|
+| LinkedIn          | [View Profile](https://www.linkedin.com/in/wesleyquintero/)             |
+| Certifications    | [View Certifications](https://www.linkedin.com/in/wesleyquintero/details/certifications/) |
+| GitHub            | [View Repository](https://github.com/johnwesleyquintero)               |
+| Portfolio         | [View Portfolio](https://wesleyquintero.vercel.app/)                   |
+| Documentation     | [View Documentation](https://sellsmart-docs.vercel.app/)              |
+| Main Web App      | [View Main Web App](https://sellsmart-hub.vercel.app/)                |
+
 ---
 
 ## **🛠️ Acknowledgments**  
