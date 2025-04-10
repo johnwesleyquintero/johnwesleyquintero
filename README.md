@@ -71,7 +71,8 @@ Here are some of the technologies and tools I work with regularly:
 
 *   **Email:** [johnwesleyquintero@gmail.com](mailto:johnwesleyquintero@gmail.com)
 *   **LinkedIn:** [linkedin.com/in/wesleyquintero](https://www.linkedin.com/in/wesleyquintero/)
-*   **Portfolio:** [wesleyquintero.vercel.app](https://wesleyquintero.vercel.app/)
+* [Portfolio](https://wq-portfolio.netlify.app/) - My web development portfolio showcasing various projects
+* [Resume](https://wq-resume.netlify.app/) - My professional resume with detailed work history and skills
 *   **YouTube:** [@nebula-singularity](https://www.youtube.com/@nebula-singularity)
 
 ---
