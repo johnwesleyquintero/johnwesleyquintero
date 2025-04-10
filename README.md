@@ -73,6 +73,7 @@ Here are some of the technologies and tools I work with regularly:
 *   **LinkedIn:** [linkedin.com/in/wesleyquintero](https://www.linkedin.com/in/wesleyquintero/)
 * [Portfolio](https://wq-portfolio.netlify.app/) - My web development portfolio showcasing various projects
 * [Resume](https://wq-resume.netlify.app/) - My professional resume with detailed work history and skills
+* [Academic Research](https://usep.academia.edu/JohnWesleyQuintero) - My academic thesis and research profile
 *   **YouTube:** [@nebula-singularity](https://www.youtube.com/@nebula-singularity)
 
 ---
