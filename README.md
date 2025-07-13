@@ -72,7 +72,7 @@ Here are some of the technologies and tools I work with regularly:
 *   **Email:** [johnwesleyquintero@gmail.com](mailto:johnwesleyquintero@gmail.com)
 *   **LinkedIn:** [linkedin.com/in/wesleyquintero](https://www.linkedin.com/in/wesleyquintero/)
 *   **Portfolio:** [wesleyquintero.vercel.app](https://wesleyquintero.vercel.app/)
-*   **Resume:** [wq-resume.netlify.app](https://wq-resume.netlify.app/)
+*   **Resume:** [johnwesleyquintero.netlify.app(https://johnwesleyquintero.netlify.app/)
 *   **Academic Research:** [Academia.edu Profile](https://usep.academia.edu/JohnWesleyQuintero) (74k+ Views | Top 2%)
 *   **YouTube:** [@nebula-singularity](https://www.youtube.com/@nebula-singularity)
 
