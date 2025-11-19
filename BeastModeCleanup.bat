@@ -3,7 +3,7 @@ setlocal enabledelayedexpansion
 
 :: =====================================================
 :: BEAST MODE PC Cleanup & Optimization Desktop-Ready
-:: Comprehensive system cleanup + logging + progress
+:: Comprehensive system cleanup + logging + progress + final
 :: =====================================================
 
 :: Check for administrative privileges
@@ -215,3 +215,4 @@ for /L %%i in (!FILLED!,1,30) do set BAR=!BAR!-
 set BAR=!BAR!]
 echo Progress !CURRENT_STEP!/!TOTAL_STEPS! !BAR! !PERCENT!%% complete
 exit /b
+
