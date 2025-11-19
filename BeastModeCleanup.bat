@@ -6,6 +6,17 @@ setlocal enabledelayedexpansion
 :: Comprehensive system cleanup + logging + progress
 :: =====================================================
 
+:: Check for administrative privileges
+openfiles >nul 2>&1
+if errorlevel 1 (
+    echo.
+    echo This script requires Administrator privileges.
+    echo Please right-click the script and select "Run as administrator".
+    echo.
+    pause
+    exit /b
+)
+
 set LOGFILE=%~dp0BeastModeCleanup_%date:~10,4%-%date:~4,2%-%date:~7,2%_%time:~0,2%-%time:~3,2%-%time:~6,2%.txt
 set SUMMARYFILE=%~dp0CleanupSummary_%date:~10,4%-%date:~4,2%-%date:~7,2%.txt
 
@@ -18,12 +29,11 @@ set /a UPDATE_FREED=0
 (echo ================================================== & echo ==================================================>> "%LOGFILE%")
 (echo BEAST MODE Cleanup Run on %date% at %time% & echo BEAST MODE Cleanup Run on %date% at %time%>> "%LOGFILE%")
 (echo ================================================== & echo ==================================================>> "%LOGFILE%")
-echo Starting Beast Mode PC Cleanup & Optimization...
+echo Starting Beast Mode PC Cleanup ^& Optimization...
 echo ==================================================
 
 :: ---- Get initial disk space ----
-for /f "tokens=2 delims= " %%A in ('wmic logicaldisk where "DeviceID='C:'" get FreeSpace /value ^| find "FreeSpace"') do set INITIAL_SPACE=%%A
-set /a INITIAL_SPACE_MB=!INITIAL_SPACE!/1024/1024
+for /f "usebackq" %%A in (`powershell -Command "(Get-PSDrive C).Free / 1MB"`) do set INITIAL_SPACE_MB=%%A
 (echo Initial free space: !INITIAL_SPACE_MB! MB & echo Initial free space: !INITIAL_SPACE_MB! MB>> "%LOGFILE%")
 
 :: ==================================================
@@ -59,22 +69,42 @@ call :ProgressBar 1 8
 echo Clearing Browser Cache...
 :: Chrome
 if exist "%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache" (
-    rd /s /q "%LOCALAPPDDATA%\Google\Chrome\User Data\Default\Cache"
-    (echo [BROWSER] Chrome cache cleared & echo [BROWSER] Chrome cache cleared>> "%LOGFILE%")
+    rd /s /q "%LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache" >nul 2>&1
+    if errorlevel 0 (
+        (echo [BROWSER] Chrome cache cleared & echo [BROWSER] Chrome cache cleared>> "%LOGFILE%")
+    ) else (
+        (echo [BROWSER] Failed to clear Chrome cache & echo [BROWSER] Failed to clear Chrome cache>> "%LOGFILE%")
+    )
+) else (
+    (echo [BROWSER] Chrome cache directory not found & echo [BROWSER] Chrome cache directory not found>> "%LOGFILE%")
 )
 :: Firefox
 if exist "%LOCALAPPDATA%\Mozilla\Firefox\Profiles" (
     for /d %%p in ("%LOCALAPPDATA%\Mozilla\Firefox\Profiles\*.*") do (
         if exist "%%p\cache2\entries" (
-            rd /s /q "%%p\cache2\entries"
-            (echo [BROWSER] Firefox cache cleared & echo [BROWSER] Firefox cache cleared>> "%LOGFILE%")
+            rd /s /q "%%p\cache2\entries" >nul 2>&1
+            if errorlevel 0 (
+                (echo [BROWSER] Firefox cache cleared for profile %%p & echo [BROWSER] Firefox cache cleared for profile %%p>> "%LOGFILE%")
+            ) else (
+                (echo [BROWSER] Failed to clear Firefox cache for profile %%p & echo [BROWSER] Failed to clear Firefox cache for profile %%p>> "%LOGFILE%")
+            )
+        ) else (
+            (echo [BROWSER] Firefox cache directory not found for profile %%p & echo [BROWSER] Firefox cache directory not found for profile %%p>> "%LOGFILE%")
         )
     )
+) else (
+    (echo [BROWSER] Firefox profiles directory not found & echo [BROWSER] Firefox profiles directory not found>> "%LOGFILE%")
 )
 :: Edge
 if exist "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache" (
-    rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache"
-    (echo [BROWSER] Edge cache cleared & echo [BROWSER] Edge cache cleared>> "%LOGFILE%")
+    rd /s /q "%LOCALAPPDATA%\Microsoft\Edge\User Data\Default\Cache" >nul 2>&1
+    if errorlevel 0 (
+        (echo [BROWSER] Edge cache cleared & echo [BROWSER] Edge cache cleared>> "%LOGFILE%")
+    ) else (
+        (echo [BROWSER] Failed to clear Edge cache & echo [BROWSER] Failed to clear Edge cache>> "%LOGFILE%")
+    )
+) else (
+    (echo [BROWSER] Edge cache directory not found & echo [BROWSER] Edge cache directory not found>> "%LOGFILE%")
 )
 call :ProgressBar 2 8
 
@@ -148,9 +178,15 @@ call :ProgressBar 8 8
 :: ==================================================
 :: Summary
 :: ==================================================
-for /f "tokens=2 delims= " %%A in ('wmic logicaldisk where "DeviceID='C:'" get FreeSpace /value ^| find "FreeSpace"') do set FINAL_SPACE=%%A
-set /a FINAL_SPACE_MB=!FINAL_SPACE!/1024/1024
-set /a SPACE_FREED=!FINAL_SPACE_MB!-!INITIAL_SPACE_MB!
+for /f "usebackq" %%A in (`powershell -Command "(Get-PSDrive C).Free / 1MB"`) do set FINAL_SPACE_MB=%%A
+for /f "usebackq" %%A in (`powershell -Command "$initial = %INITIAL_SPACE_MB%; $final = %FINAL_SPACE_MB%; [math]::Round($final - $initial)"`) do set SPACE_FREED=%%A
+
+echo ================================================== >> "%LOGFILE%"
+echo Beast Mode Cleanup Complete! >> "%LOGFILE%"
+echo Initial free space: !INITIAL_SPACE_MB! MB >> "%LOGFILE%"
+echo Final free space:   !FINAL_SPACE_MB! MB >> "%LOGFILE%"
+echo Space freed:        !SPACE_FREED! MB >> "%LOGFILE%"
+echo ================================================== >> "%LOGFILE%"
 
 echo ==================================================
 echo Beast Mode Cleanup Complete!
