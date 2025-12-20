@@ -68,6 +68,7 @@ export function HomeClient({ initialProjects }: HomeClientProps) {
   const rotate1 = useTransform(scrollYProgress, [0, 1], [0, isMobile ? 45 : 90]);
   const rotate2 = useTransform(scrollYProgress, [0, 1], [0, isMobile ? -20 : -45]);
   const letterboxScale = useTransform(scrollYProgress, [0, 0.1], [1, 0.5]);
+  const sovereignLineTop = useTransform(scrollYProgress, [0, 1], ["-20%", "100%"]);
 
   if (!mounted) {
     return null;
@@ -121,15 +122,34 @@ export function HomeClient({ initialProjects }: HomeClientProps) {
           style={{ scaleX }}
         />
 
-        <Hero />
-        <Philosophy />
+        {/* Global Sovereign Line (Connective Tissue) */}
+        <div className="fixed left-6 md:left-12 top-0 bottom-0 w-px bg-zinc-900 z-[50] pointer-events-none hidden md:block">
+          <motion.div 
+            className="absolute top-0 left-0 w-full bg-gradient-to-b from-transparent via-emerald-500/50 to-transparent h-[20vh]"
+            style={{ 
+              top: sovereignLineTop
+            }}
+          />
+        </div>
 
-        {/* Horizontal Projects Section */}
-        <HorizontalProjects projects={initialProjects} />
+        <div className="relative z-10">
+          <Hero />
+          
+          <div className="relative">
+            <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-black via-zinc-950 to-black z-10 pointer-events-none" />
+            <Philosophy />
+          </div>
 
-        <TechStack />
-        <CTA />
-        <Footer />
+          <HorizontalProjects projects={initialProjects} />
+
+          <div className="relative">
+            <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-black via-zinc-950 to-black z-10 pointer-events-none" />
+            <TechStack />
+          </div>
+
+          <CTA />
+          <Footer />
+        </div>
       </main>
     </div>
   );

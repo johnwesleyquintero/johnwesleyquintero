@@ -73,7 +73,7 @@ export const Hero = () => {
               >
                 <GlitchText 
                   text={CONFIG.name.split(' ').slice(0, -1).join(' ') || CONFIG.name} 
-                  className="text-7xl md:text-[10rem] font-black tracking-tighter leading-[0.8] bg-gradient-to-b from-white via-white to-zinc-600 bg-clip-text text-transparent" 
+                  className="text-7xl md:text-[10rem] font-black tracking-tighter leading-[0.8] bg-gradient-to-b from-white via-zinc-100 to-emerald-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(16,185,129,0.2)] filter brightness-125" 
                 />
               </motion.div>
             </div>
@@ -86,7 +86,7 @@ export const Hero = () => {
               >
                 <GlitchText 
                   text={CONFIG.name.split(' ').slice(-1)[0]} 
-                  className="text-7xl md:text-[10rem] font-black tracking-tighter leading-[0.8] text-white" 
+                  className="text-7xl md:text-[10rem] font-black tracking-tighter leading-[0.8] text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]" 
                 />
                 <motion.span 
                   initial={{ scale: 0, rotate: -180, opacity: 0 }}

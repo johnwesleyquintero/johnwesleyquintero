@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useScroll, useTransform, useSpring, useVelocity } from "framer-motion";
-import { ExternalLink, Github, ArrowRight } from "lucide-react";
+import { ExternalLink, Github, ArrowRight, GitFork, Star } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { type GitHubRepo } from "@/lib/github";
@@ -42,6 +42,14 @@ const ProjectCard = ({ project, index }: { project: GitHubRepo; index: number })
   const rotateXTransform = useTransform(mouseY, [-20, 20], [10, -10]);
   const rotateYTransform = useTransform(mouseX, [-20, 20], [-10, 10]);
 
+  const spotlightBackground = useTransform(
+    [spotlightX, spotlightY],
+    ([x, y]) => `radial-gradient(800px circle at ${x}px ${y}px, rgba(16, 185, 129, 0.12), transparent 40%)`
+  );
+
+  const contentX = useTransform(mouseX, (v) => v * 0.05);
+  const contentY = useTransform(mouseY, (v) => v * 0.05);
+
   const handleSpotlight = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
@@ -69,10 +77,7 @@ const ProjectCard = ({ project, index }: { project: GitHubRepo; index: number })
       <motion.div 
         className="absolute inset-0 z-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
         style={{
-          background: useTransform(
-            [spotlightX, spotlightY],
-            ([x, y]) => `radial-gradient(800px circle at ${x}px ${y}px, rgba(16, 185, 129, 0.12), transparent 40%)`
-          )
+          background: spotlightBackground
         }}
       />
 
@@ -89,7 +94,7 @@ const ProjectCard = ({ project, index }: { project: GitHubRepo; index: number })
       </div>
 
       <div className="relative h-full p-10 md:p-16 flex flex-col justify-between z-20" style={{ transform: "translateZ(50px)" }}>
-        <motion.div style={{ x: useTransform(mouseX, (v) => v * 0.05), y: useTransform(mouseY, (v) => v * 0.05) }}>
+        <motion.div style={{ x: contentX, y: contentY }}>
           <motion.div 
             className="mb-10 p-5 w-fit rounded-2xl bg-zinc-950 border border-zinc-800 text-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.1)]"
             whileHover={{ scale: 1.1, color: "#10b981", boxShadow: "0_0_30px_rgba(16,185,129,0.3)" }}
@@ -110,15 +115,20 @@ const ProjectCard = ({ project, index }: { project: GitHubRepo; index: number })
         </motion.div>
         
         <div className="space-y-8">
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-3">
             {project.language && (
-              <span className="text-[10px] px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 font-mono border border-zinc-700/50 uppercase tracking-widest">
+              <span className="text-[10px] px-3 py-1.5 rounded-full bg-zinc-800 text-zinc-300 font-mono border border-zinc-700/50 uppercase tracking-widest">
                 {project.language}
               </span>
             )}
-            <span className="text-[10px] px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 font-mono border border-emerald-500/20 uppercase tracking-[0.2em]">
-              STARS_{project.stargazers_count}
-            </span>
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-500 font-mono border border-emerald-500/20 uppercase tracking-[0.2em] text-[10px]">
+              <Star className="w-3 h-3" />
+              <span>{project.stargazers_count}</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-500 font-mono border border-blue-500/20 uppercase tracking-[0.2em] text-[10px]">
+              <GitFork className="w-3 h-3" />
+              <span>{project.forks_count}</span>
+            </div>
           </div>
           
           <div className="flex items-center gap-8">
@@ -234,8 +244,16 @@ export const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => 
             top: ["-10%", "110%"],
             opacity: [0, 0.3, 0],
           }}
-          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-          className="absolute left-0 right-0 h-[2px] bg-emerald-500/50 z-30 pointer-events-none blur-[1px] shadow-[0_0_15px_rgba(16,185,129,0.5)]"
+          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+          className="absolute left-0 right-0 h-[1px] bg-emerald-500/30 z-30 pointer-events-none blur-[1px]"
+        />
+        <motion.div 
+          animate={{ 
+            top: ["-10%", "110%"],
+            opacity: [0, 0.2, 0],
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: "linear", delay: 2 }}
+          className="absolute left-0 right-0 h-[1px] bg-blue-500/30 z-30 pointer-events-none blur-[1px]"
         />
 
         <motion.div style={{ opacity }} className="absolute inset-0 z-0 overflow-hidden pointer-events-none">

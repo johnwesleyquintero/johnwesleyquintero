@@ -5,8 +5,9 @@ import { CONFIG, TECH_STACK } from "@/lib/constants";
 
 export const TechStack = () => {
   return (
-    <section className="py-32 md:py-64 px-6 bg-black relative">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-32 md:py-64 px-6 bg-black relative border-t border-zinc-900/50">
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#10b981 0.5px, transparent 0.5px)', backgroundSize: '40px 40px' }} />
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-32 md:mb-48">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

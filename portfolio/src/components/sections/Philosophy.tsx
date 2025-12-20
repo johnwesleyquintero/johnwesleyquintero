@@ -5,11 +5,11 @@ import { PHILOSOPHY } from "@/lib/constants";
 
 export const Philosophy = () => {
   return (
-    <section className="py-32 md:py-64 px-6 bg-black relative overflow-hidden">
+    <section className="py-32 md:py-64 px-6 bg-black relative overflow-hidden border-t border-zinc-900/50">
       {/* Cinematic Background for Philosophy */}
       <div className="absolute inset-0 pointer-events-none opacity-20">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]" />
-        <div className="absolute inset-0 bg-black [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,transparent_0%,#000_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:60px_60px]" />
+        <div className="absolute inset-0 bg-black [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_0%,#000_100%)]" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">

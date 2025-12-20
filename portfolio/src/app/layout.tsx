@@ -17,6 +17,30 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: CONFIG.title,
   description: CONFIG.description,
+  keywords: ["Operations Architect", "Full-Stack Developer", "Sovereign Systems", "Next.js", "TypeScript", "Supply Chain Optimization", "AI System Design"],
+  authors: [{ name: CONFIG.name }],
+  openGraph: {
+    title: CONFIG.title,
+    description: CONFIG.description,
+    url: 'https://wesleyquintero.com', // Replace with your actual domain
+    siteName: CONFIG.title,
+    images: [
+      {
+        url: '/og-image.png', // You should create this image later
+        width: 1200,
+        height: 630,
+        alt: CONFIG.title,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: CONFIG.title,
+    description: CONFIG.description,
+    images: ['/og-image.png'],
+  },
   icons: {
     icon: "/logo.svg",
   },

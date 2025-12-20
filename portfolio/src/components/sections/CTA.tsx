@@ -7,7 +7,7 @@ import { CONFIG } from "@/lib/constants";
 
 export const CTA = () => {
   return (
-    <section className="py-64 px-6 relative overflow-hidden">
+    <section className="py-64 px-6 relative overflow-hidden border-t border-zinc-900/50">
       <div className="absolute inset-0 bg-emerald-500/5 z-0" />
       <div className="max-w-4xl mx-auto text-center relative z-10">
         <motion.div

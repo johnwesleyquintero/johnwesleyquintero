@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 export const CustomCursor = () => {
   const [isHovering, setIsHovering] = useState(false);
+  const [isClicking, setIsClicking] = useState(false);
   const cursorX = useSpring(0, { stiffness: 500, damping: 28 });
   const cursorY = useSpring(0, { stiffness: 500, damping: 28 });
 
@@ -23,11 +24,18 @@ export const CustomCursor = () => {
       setIsHovering(!!target.closest('a, button, [role="button"], .group, input, select, textarea'));
     };
 
+    const handleMouseDown = () => setIsClicking(true);
+    const handleMouseUp = () => setIsClicking(false);
+
     window.addEventListener("mousemove", moveCursor);
     window.addEventListener("mouseover", handleHover);
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
     return () => {
       window.removeEventListener("mousemove", moveCursor);
       window.removeEventListener("mouseover", handleHover);
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
     };
   }, [cursorX, cursorY]);
 
@@ -40,8 +48,8 @@ export const CustomCursor = () => {
           y: cursorY,
           translateX: "-50%",
           translateY: "-50%",
-          scale: isHovering ? 2.5 : 1,
-          backgroundColor: isHovering ? "rgba(16, 185, 129, 0.1)" : "transparent",
+          scale: isClicking ? 0.8 : (isHovering ? 2.5 : 1),
+          backgroundColor: isHovering ? "rgba(16, 185, 129, 0.15)" : "transparent",
         }}
         transition={{ type: "spring", stiffness: 250, damping: 20 }}
       />
@@ -52,6 +60,8 @@ export const CustomCursor = () => {
           y: cursorY,
           translateX: "-50%",
           translateY: "-50%",
+          scale: isClicking ? 4 : 1,
+          opacity: isClicking ? 0.5 : 1,
         }}
       />
     </>
