@@ -53,40 +53,43 @@ jobs:
           markdown_list=$(echo "$pinned_repos_json" | jq -r '.[] |
             "### 📌 [\(.name)](\(.url))\n" +
             (if .homepageUrl and (.homepageUrl | length > 0) then "*   **Live Demo/Docs:** [\(.homepageUrl)](\(.homepageUrl))\n" else "" end) +
-            "*   \(.description // \"No description provided.\")\n" +
-            "*   **Stars:** \(.stargazerCount) | **Language:** \(.primaryLanguage.name // \"N/A\")\n"
+            "*   \(.description // "No description provided.")\n" +
+            "*   **Stars:** \(.stargazerCount) | **Language:** \(.primaryLanguage.name // "N/A")\n"
           ')
 
-          markdown_list="${markdown_list//'%'/'%25'}"
-          markdown_list="${markdown_list//$'\n'/'%0A'}"
-          markdown_list="${markdown_list//$'\r'/'%0D'}"
-
-          echo "markdown_list<<EOF" >> $GITHUB_OUTPUT
-          echo "$markdown_list" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          {
+            echo "markdown_list<<EOF"
+            echo "$markdown_list"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Inject Project List into README
+        env:
+          PROJECT_LIST: ${{ steps.generate_list.outputs.markdown_list }}
         run: |
           START_MARKER="<!-- START_PROJECT_LIST -->"
           END_MARKER="<!-- END_PROJECT_LIST -->"
           README_FILE="README.md"
           TEMP_CONTENT_FILE="new_project_list.md"
 
-          echo -e "${{ steps.generate_list.outputs.markdown_list }}" > "$TEMP_CONTENT_FILE"
+          # Use environment variable to avoid shell escaping issues
+          echo "$PROJECT_LIST" > "$TEMP_CONTENT_FILE"
 
+          # Use awk to replace content between markers.
           awk -v start="$START_MARKER" -v end="$END_MARKER" -v new_content_file="$TEMP_CONTENT_FILE" '
           BEGIN { printing = 1 }
-          $0 ~ start {
+          $0 == start {
             print;
             while ((getline line < new_content_file) > 0) {
               print line
             }
             close(new_content_file);
             printing = 0;
+            next;
           }
-          $0 ~ end { printing = 1 }
+          $0 == end { printing = 1 }
           printing { print }
           ' "$README_FILE" > temp_readme && mv temp_readme "$README_FILE"
 
