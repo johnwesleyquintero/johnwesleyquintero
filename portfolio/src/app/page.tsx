@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useVelocity } from "framer-motion";
 import { ExternalLink, Github, Linkedin, Mail, ArrowRight, Code2, Database, Layout, Cpu, Sparkles, MoveRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -39,6 +39,89 @@ const RevealText = ({ text, className, delay = 0 }: { text: string; className?: 
   );
 };
 
+const ProjectCard = ({ project, index }: { project: GitHubRepo; index: number }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const mouseX = useSpring(0, { stiffness: 150, damping: 20 });
+  const mouseY = useSpring(0, { stiffness: 150, damping: 20 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left - rect.width / 2) * 0.15;
+    const y = (e.clientY - rect.top - rect.height / 2) * 0.15;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
+  return (
+    <motion.div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ x: mouseX, y: mouseY, rotateX: useTransform(mouseY, [-20, 20], [10, -10]), rotateY: useTransform(mouseX, [-20, 20], [-10, 10]) }}
+      className="group relative h-[450px] w-[350px] md:w-[500px] overflow-hidden rounded-3xl bg-zinc-900/40 border border-zinc-800/50 flex-shrink-0 transition-all duration-500 hover:border-emerald-500/30 hover:shadow-[0_0_50px_rgba(16,185,129,0.1)] perspective-1000"
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+      
+      {/* Floating Index Background */}
+      <div className="absolute -bottom-12 -right-12 text-[20rem] font-black text-white/[0.02] select-none pointer-events-none transition-transform duration-700 group-hover:-translate-y-8 group-hover:-translate-x-8">
+        {index + 1}
+      </div>
+
+      <div className="relative h-full p-8 md:p-12 flex flex-col justify-between">
+        <motion.div style={{ x: useTransform(mouseX, (v) => v * 0.2), y: useTransform(mouseY, (v) => v * 0.2) }}>
+          <div className="mb-8 p-4 w-fit rounded-2xl bg-zinc-900 border border-zinc-800 text-emerald-400 group-hover:text-emerald-300 group-hover:scale-110 transition-all duration-500">
+            <ProjectIcon language={project.language} />
+          </div>
+          <h3 className="text-3xl font-bold mb-4 tracking-tight text-white group-hover:translate-x-2 transition-transform duration-500">{project.name}</h3>
+          <p className="text-zinc-400 leading-relaxed text-lg font-medium line-clamp-3 group-hover:text-zinc-300 transition-colors duration-500">
+            {project.description || "Deciphering complexity through code and operational excellence."}
+          </p>
+        </motion.div>
+        
+        <div className="space-y-8">
+          <div className="flex flex-wrap gap-2">
+            {project.language && (
+              <span className="text-[10px] px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 font-mono border border-zinc-700/50">
+                {project.language}
+              </span>
+            )}
+            <span className="text-[10px] px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 font-mono border border-emerald-500/20 uppercase tracking-tighter">
+              STARS_{project.stargazers_count}
+            </span>
+          </div>
+          
+          <div className="flex items-center gap-8">
+            <Link
+              href={project.html_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
+            >
+              SOURCE_CODE <ArrowRight className="w-4 h-4" />
+            </Link>
+            {project.homepage && (
+              <Link
+                href={project.homepage}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sm font-bold text-zinc-400 hover:text-white transition-colors"
+              >
+                LIVE_DEMO <ExternalLink className="w-4 h-4" />
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => {
   const targetRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -48,17 +131,45 @@ const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => {
 
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-70%"]);
   const springX = useSpring(x, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  
+  // Cinematic Velocity-based Skew
+  const scrollVelocity = useVelocity(scrollYProgress);
+  const skewXRaw = useTransform(scrollVelocity, [-0.5, 0.5], [-15, 15]);
+  const skewX = useSpring(skewXRaw, { stiffness: 400, damping: 90 });
+  
   const opacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
+  const glowColor = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    ["rgba(16, 185, 129, 0.05)", "rgba(59, 130, 246, 0.05)", "rgba(16, 185, 129, 0.05)"]
+  );
 
   return (
     <section ref={targetRef} className="relative h-[500vh] bg-black">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+        {/* Scanning Line Effect */}
+        <motion.div 
+          animate={{ 
+            top: ["0%", "100%", "0%"],
+            opacity: [0.1, 0.3, 0.1]
+          }}
+          transition={{ 
+            duration: 10, 
+            repeat: Infinity, 
+            ease: "linear" 
+          }}
+          className="absolute left-0 right-0 h-[2px] bg-emerald-500/30 z-30 pointer-events-none blur-[1px]"
+        />
+
         {/* Background Decorative Element */}
         <motion.div 
           style={{ opacity }}
           className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
         >
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[120vw] bg-emerald-500/5 blur-[150px] rounded-full" />
+          <motion.div 
+            style={{ backgroundColor: glowColor }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[120vw] blur-[150px] rounded-full transition-colors duration-1000" 
+          />
           
           {/* Animated Grid Pattern */}
           <div className="absolute inset-0 opacity-[0.1]" 
@@ -128,59 +239,9 @@ const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => {
           </div>
         </motion.div>
 
-        <motion.div style={{ x: springX, opacity }} className="flex gap-12 px-6 md:px-24 relative z-20">
-          {projects.map((project) => (
-            <div
-              key={project.name}
-              className="group relative h-[450px] w-[350px] md:w-[500px] overflow-hidden rounded-3xl bg-zinc-900/40 border border-zinc-800/50 flex-shrink-0"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <div className="relative h-full p-8 md:p-12 flex flex-col justify-between">
-                <div>
-                  <div className="mb-8 p-4 w-fit rounded-2xl bg-zinc-900 border border-zinc-800 text-emerald-400 group-hover:text-emerald-300 group-hover:scale-110 transition-all duration-500">
-                    <ProjectIcon language={project.language} />
-                  </div>
-                  <h3 className="text-3xl font-bold mb-4 tracking-tight text-white">{project.name}</h3>
-                  <p className="text-zinc-400 leading-relaxed text-lg font-medium line-clamp-3">
-                    {project.description || "Deciphering complexity through code and operational excellence."}
-                  </p>
-                </div>
-                
-                <div className="space-y-8">
-                  <div className="flex flex-wrap gap-2">
-                    {project.language && (
-                      <span className="text-[10px] px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 font-mono border border-zinc-700/50">
-                        {project.language}
-                      </span>
-                    )}
-                    <span className="text-[10px] px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 font-mono border border-emerald-500/20 uppercase tracking-tighter">
-                      STARS_{project.stargazers_count}
-                    </span>
-                  </div>
-                  
-                  <div className="flex items-center gap-8">
-                    <Link
-                      href={project.html_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
-                    >
-                      SOURCE_CODE <ArrowRight className="w-4 h-4" />
-                    </Link>
-                    {project.homepage && (
-                      <Link
-                        href={project.homepage}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-sm font-bold text-zinc-400 hover:text-white transition-colors"
-                      >
-                        LIVE_DEMO <ExternalLink className="w-4 h-4" />
-                      </Link>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
+        <motion.div style={{ x: springX, skewX, opacity }} className="flex gap-12 px-6 md:px-24 relative z-20">
+          {projects.map((project, idx) => (
+            <ProjectCard key={project.name} project={project} index={idx} />
           ))}
           {/* End Card */}
           <div className="h-[450px] w-[350px] md:w-[500px] flex flex-col items-center justify-center rounded-3xl border border-dashed border-zinc-800 flex-shrink-0 group hover:border-emerald-500/30 transition-colors">
