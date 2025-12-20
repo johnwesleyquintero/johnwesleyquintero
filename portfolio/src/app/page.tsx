@@ -46,33 +46,89 @@ const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => {
     offset: ["start start", "end end"]
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-70%"]);
   const springX = useSpring(x, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const opacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
 
   return (
-    <section ref={targetRef} className="relative h-[400vh] bg-zinc-950">
+    <section ref={targetRef} className="relative h-[500vh] bg-black">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-col px-6 md:px-24 w-full absolute top-12 md:top-24 z-10"
-          >
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-              className="flex items-center gap-4 mb-4"
-            >
-              <span className="h-px w-12 bg-emerald-500" />
-              <span className="text-emerald-500 font-mono text-xs tracking-[0.3em] uppercase">Featured Works</span>
-            </motion.div>
-            <h2 className="text-5xl md:text-8xl font-black tracking-tighter text-white opacity-20">
-              {CONFIG.labels.projectsTitle}
-            </h2>
-          </motion.div>
+        {/* Background Decorative Element */}
+        <motion.div 
+          style={{ opacity }}
+          className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
+        >
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[120vw] bg-emerald-500/5 blur-[150px] rounded-full" />
+          
+          {/* Animated Grid Pattern */}
+          <div className="absolute inset-0 opacity-[0.1]" 
+               style={{ backgroundImage: 'radial-gradient(#10b981 0.5px, transparent 0.5px)', backgroundSize: '40px 40px' }} 
+          />
+          
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.8)_100%)]" />
+        </motion.div>
 
-        <motion.div style={{ x: springX }} className="flex gap-8 px-6 md:px-24">
+        <motion.div
+          style={{ opacity }}
+          className="flex flex-col px-6 md:px-24 w-full absolute top-12 md:top-24 z-10"
+        >
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+            className="flex items-center gap-4 mb-4"
+          >
+            <span className="h-px w-12 bg-emerald-500" />
+            <span className="text-emerald-500 font-mono text-xs tracking-[0.3em] uppercase">Cinematic Archive</span>
+          </motion.div>
+          <h2 className="text-5xl md:text-[12rem] font-black tracking-tighter text-white opacity-[0.03] leading-none absolute -top-8 left-12 select-none pointer-events-none whitespace-nowrap">
+            {CONFIG.labels.projectsTitle}
+          </h2>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white relative z-10">
+            {CONFIG.labels.projectsTitle}
+          </h2>
+        </motion.div>
+
+        {/* Project Counter / Progress */}
+        <motion.div 
+          style={{ opacity }}
+          className="absolute bottom-12 right-12 md:right-24 z-10 flex items-center gap-6"
+        >
+          <div className="flex flex-col items-end">
+            <span className="text-emerald-500 font-mono text-xs tracking-widest uppercase">Archive_Status</span>
+            <span className="text-white font-bold text-xl tracking-tighter">0{projects.length} PROJECTS_LOADED</span>
+          </div>
+          <div className="h-12 w-px bg-zinc-800" />
+          <div className="w-16 h-16 rounded-full border border-zinc-800 flex items-center justify-center relative">
+            <svg className="w-full h-full -rotate-90">
+              <circle
+                cx="32"
+                cy="32"
+                r="30"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1"
+                className="text-zinc-800"
+              />
+              <motion.circle
+                cx="32"
+                cy="32"
+                r="30"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeDasharray="188.5"
+                style={{ strokeDashoffset: useTransform(scrollYProgress, [0, 1], [188.5, 0]) }}
+                className="text-emerald-500"
+              />
+            </svg>
+            <span className="absolute text-[10px] font-mono text-emerald-500">
+              {projects.length}
+            </span>
+          </div>
+        </motion.div>
+
+        <motion.div style={{ x: springX, opacity }} className="flex gap-12 px-6 md:px-24 relative z-20">
           {projects.map((project) => (
             <div
               key={project.name}
@@ -314,23 +370,24 @@ export default function Home() {
       </section>
 
       {/* Philosophy Section */}
-      <section className="py-48 px-6 bg-zinc-950/50 relative overflow-hidden">
+      <section className="py-32 md:py-64 px-6 bg-black relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
             <div className="space-y-12">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
                 className="flex items-center gap-4"
               >
                 <span className="h-px w-12 bg-emerald-500" />
                 <span className="text-emerald-500 font-mono text-xs tracking-[0.3em] uppercase">Our Ethos</span>
               </motion.div>
-              <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-white leading-tight">
+              <h2 className="text-5xl md:text-8xl font-black tracking-tighter text-white leading-tight">
                 Engineering <br />
-                <span className="text-zinc-500">Independence.</span>
+                <span className="text-emerald-500/50">Independence.</span>
               </h2>
-              <p className="text-xl text-zinc-400 leading-relaxed max-w-xl">
+              <p className="text-xl md:text-2xl text-zinc-400 leading-relaxed max-w-xl font-medium">
                 We don&apos;t just build apps. We architect resilient digital infrastructures that empower scale and operational excellence.
               </p>
             </div>
@@ -373,19 +430,20 @@ export default function Home() {
       )}
 
       {/* Tech Stack - Vertical Scroll Cinematic */}
-      <section className="py-64 px-6 bg-black relative">
+      <section className="py-32 md:py-64 px-6 bg-black relative">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-48">
+          <div className="text-center mb-32 md:mb-48">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
               className="inline-flex items-center gap-4 mb-8"
             >
               <span className="h-px w-8 bg-emerald-500" />
               <span className="text-emerald-500 font-mono text-xs tracking-[0.3em] uppercase">Core Mastery</span>
               <span className="h-px w-8 bg-emerald-500" />
             </motion.div>
-            <h2 className="text-5xl md:text-8xl font-black tracking-tighter text-white">
+            <h2 className="text-6xl md:text-9xl font-black tracking-tighter text-white">
               {CONFIG.labels.techStackTitle}
             </h2>
           </div>
