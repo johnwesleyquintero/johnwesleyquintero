@@ -1,12 +1,196 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring, useVelocity } from "framer-motion";
-import { ExternalLink, Github, Linkedin, Mail, ArrowRight, Code2, Database, Layout, Cpu, Sparkles, MoveRight } from "lucide-react";
+import { motion, useScroll, useTransform, useSpring, useVelocity, AnimatePresence } from "framer-motion";
+import { ExternalLink, Github, Linkedin, Mail, ArrowRight, Code2, Database, Layout, Cpu, Sparkles, MoveRight, Terminal } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 import { getGitHubProjects, type GitHubRepo } from "@/lib/github";
 import { CONFIG, TECH_STACK, PHILOSOPHY } from "@/lib/constants";
+
+const CustomCursor = () => {
+  const [isHovering, setIsHovering] = useState(false);
+  const cursorX = useSpring(0, { stiffness: 500, damping: 28 });
+  const cursorY = useSpring(0, { stiffness: 500, damping: 28 });
+
+  useEffect(() => {
+    const moveCursor = (e: MouseEvent) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
+    };
+
+    const handleHover = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      setIsHovering(!!target.closest('a, button, .group'));
+    };
+
+    window.addEventListener("mousemove", moveCursor);
+    window.addEventListener("mouseover", handleHover);
+    return () => {
+      window.removeEventListener("mousemove", moveCursor);
+      window.removeEventListener("mouseover", handleHover);
+    };
+  }, [cursorX, cursorY]);
+
+  return (
+    <>
+      <motion.div
+        className="fixed top-0 left-0 w-8 h-8 border border-emerald-500 rounded-full pointer-events-none z-[100] mix-blend-difference hidden md:block"
+        style={{
+          x: cursorX,
+          y: cursorY,
+          translateX: "-50%",
+          translateY: "-50%",
+          scale: isHovering ? 2.5 : 1,
+          backgroundColor: isHovering ? "rgba(16, 185, 129, 0.1)" : "transparent",
+        }}
+        transition={{ type: "spring", stiffness: 250, damping: 20 }}
+      />
+      <motion.div
+        className="fixed top-0 left-0 w-1 h-1 bg-emerald-500 rounded-full pointer-events-none z-[101] hidden md:block"
+        style={{
+          x: cursorX,
+          y: cursorY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
+      />
+    </>
+  );
+};
+
+const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
+  const [progress, setProgress] = useState(0);
+  const [status, setStatus] = useState("Initializing systems...");
+
+  useEffect(() => {
+    const statuses = [
+      "Initializing systems...",
+      "Loading operational protocols...",
+      "Decrypting sovereign archives...",
+      "Establishing neural link...",
+      "System ready."
+    ];
+    
+    let currentStatus = 0;
+    const interval = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setTimeout(onComplete, 500);
+          return 100;
+        }
+        const next = prev + Math.random() * 15;
+        if (next > (currentStatus + 1) * 20 && currentStatus < statuses.length - 1) {
+          currentStatus++;
+          setStatus(statuses[currentStatus]);
+        }
+        return Math.min(next, 100);
+      });
+    }, 150);
+
+    return () => clearInterval(interval);
+  }, [onComplete]);
+
+  return (
+    <motion.div
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[200] bg-black flex flex-col items-center justify-center p-6 font-mono"
+    >
+      <div className="max-w-md w-full space-y-8">
+        <div className="flex items-center gap-4 text-emerald-500">
+          <Terminal className="w-6 h-6 animate-pulse" />
+          <span className="text-xs tracking-[0.3em] uppercase">Wesley_OS v2.2</span>
+        </div>
+        
+        <div className="space-y-4">
+          <div className="h-1 w-full bg-zinc-900 rounded-full overflow-hidden">
+            <motion.div 
+              className="h-full bg-emerald-500"
+              initial={{ width: 0 }}
+              animate={{ width: `${progress}%` }}
+            />
+          </div>
+          <div className="flex justify-between text-[10px] text-zinc-500 uppercase tracking-widest">
+            <span>{status}</span>
+            <span>{Math.round(progress)}%</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          {[1, 2, 3, 4].map(i => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
+              className="h-px bg-emerald-500/20 w-full"
+            />
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const GlitchText = ({ text, className }: { text: string; className?: string }) => {
+  const [delays] = useState(() => ({
+    main: Math.random() * 5 + 2,
+    red: Math.random() * 3 + 1,
+    blue: Math.random() * 4 + 1
+  }));
+
+  return (
+    <div className={`relative inline-block ${className}`}>
+      <motion.span
+        initial={{ opacity: 1 }}
+        animate={{
+          opacity: [1, 0.8, 1, 0.9, 1],
+          x: [0, -1, 1, -1, 0],
+          skewX: [0, 2, -2, 1, 0],
+        }}
+        transition={{
+          duration: 0.2,
+          repeat: Infinity,
+          repeatDelay: delays.main,
+        }}
+        className="relative z-10 block"
+      >
+        {text}
+      </motion.span>
+      <motion.span
+        animate={{
+          opacity: [0, 0.2, 0],
+          x: [-2, 2, -2],
+          scaleY: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 0.1,
+          repeat: Infinity,
+          repeatDelay: delays.red,
+        }}
+        className="absolute inset-0 z-0 text-red-500/30 translate-x-[2px] pointer-events-none"
+      >
+        {text}
+      </motion.span>
+      <motion.span
+        animate={{
+          opacity: [0, 0.2, 0],
+          x: [2, -2, 2],
+          scaleY: [1, 0.9, 1],
+        }}
+        transition={{
+          duration: 0.1,
+          repeat: Infinity,
+          repeatDelay: delays.blue,
+        }}
+        className="absolute inset-0 z-0 text-blue-500/30 -translate-x-[2px] pointer-events-none"
+      >
+        {text}
+      </motion.span>
+    </div>
+  );
+};
 
 const ProjectIcon = ({ language }: { language: string | null }) => {
   switch (language?.toLowerCase()) {
@@ -43,9 +227,17 @@ const ProjectCard = ({ project, index }: { project: GitHubRepo; index: number })
   const cardRef = useRef<HTMLDivElement>(null);
   const mouseX = useSpring(0, { stiffness: 150, damping: 20 });
   const mouseY = useSpring(0, { stiffness: 150, damping: 20 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
+    if (!cardRef.current || isMobile) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left - rect.width / 2) * 0.15;
     const y = (e.clientY - rect.top - rect.height / 2) * 0.15;
@@ -58,23 +250,49 @@ const ProjectCard = ({ project, index }: { project: GitHubRepo; index: number })
     mouseY.set(0);
   };
 
+  const spotlightX = useSpring(0);
+  const spotlightY = useSpring(0);
+
+  const rotateXTransform = useTransform(mouseY, [-20, 20], [10, -10]);
+  const rotateYTransform = useTransform(mouseX, [-20, 20], [-10, 10]);
+
+  const handleSpotlight = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    spotlightX.set(e.clientX - rect.left);
+    spotlightY.set(e.clientY - rect.top);
+  };
+
   return (
     <motion.div
       ref={cardRef}
-      onMouseMove={handleMouseMove}
+      onMouseMove={(e) => {
+        handleMouseMove(e);
+        handleSpotlight(e);
+      }}
       onMouseLeave={handleMouseLeave}
       style={{ 
         x: mouseX, 
         y: mouseY, 
-        rotateX: useTransform(mouseY, [-20, 20], [15, -15]), 
-        rotateY: useTransform(mouseX, [-20, 20], [-15, 15]),
+        rotateX: isMobile ? 0 : rotateXTransform, 
+        rotateY: isMobile ? 0 : rotateYTransform,
         transformStyle: "preserve-3d"
       }}
-      className="group relative h-[450px] w-[350px] md:w-[500px] overflow-hidden rounded-3xl bg-zinc-900/40 border border-zinc-800/50 flex-shrink-0 hover:border-emerald-500/30 hover:shadow-[0_0_50px_rgba(16,185,129,0.1)] perspective-1000"
+      className="group relative h-[450px] w-[300px] md:w-[500px] overflow-hidden rounded-3xl bg-zinc-900/40 border border-zinc-800/50 flex-shrink-0 hover:border-emerald-500/30 hover:shadow-[0_0_50px_rgba(16,185,129,0.1)] transition-all duration-500"
     >
+      {/* Cinematic Spotlight */}
+      <motion.div 
+        className="absolute inset-0 z-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{
+          background: useTransform(
+            [spotlightX, spotlightY],
+            ([x, y]) => `radial-gradient(600px circle at ${x}px ${y}px, rgba(16, 185, 129, 0.08), transparent 40%)`
+          )
+        }}
+      />
+
       <div 
         className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" 
-        style={{ transform: "translateZ(20px)" }}
       />
       
       {/* Floating Index Background */}
@@ -158,7 +376,9 @@ const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => {
     const updateScrollRange = () => {
       if (scrollRef.current) {
         // Calculate how much we need to scroll: Total content width - viewport width
-        setScrollRange(scrollRef.current.scrollWidth - window.innerWidth);
+        // Add some padding for better cinematic feel
+        const padding = window.innerWidth < 768 ? 48 : 192;
+        setScrollRange(scrollRef.current.scrollWidth - window.innerWidth + padding);
       }
     };
 
@@ -195,19 +415,34 @@ const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => {
   return (
     <section ref={targetRef} className="relative bg-black" style={{ height: `${(projects.length + 2) * 100}vh` }}>
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+        {/* Cinematic Background elements ... */}
+        <div className="absolute inset-0 z-0 bg-black" />
+        
+        {/* Mobile Hint */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 0.5 }}
+          className="absolute bottom-32 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 md:hidden z-30 pointer-events-none"
+        >
+          <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-500">Scroll to explore</span>
+          <motion.div 
+            animate={{ y: [0, 5, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="w-px h-8 bg-emerald-500/50"
+          />
+        </motion.div>
         {/* ... scanning line ... */}
         <motion.div 
           animate={{ 
-            top: ["0%", "100%", "0%"],
-            opacity: [0.05, 0.2, 0.05],
-            boxShadow: ["0 0 0px rgba(16,185,129,0)", "0 0 20px rgba(16,185,129,0.4)", "0 0 0px rgba(16,185,129,0)"]
+            top: ["-10%", "110%"],
+            opacity: [0, 0.3, 0],
           }}
           transition={{ 
-            duration: 6, 
+            duration: 8, 
             repeat: Infinity, 
-            ease: "easeInOut" 
+            ease: "linear" 
           }}
-          className="absolute left-0 right-0 h-[1px] bg-emerald-500/50 z-30 pointer-events-none blur-[0.5px]"
+          className="absolute left-0 right-0 h-[2px] bg-emerald-500/50 z-30 pointer-events-none blur-[1px] shadow-[0_0_15px_rgba(16,185,129,0.5)]"
         />
 
         {/* Background Decorative Element */}
@@ -239,7 +474,11 @@ const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => {
             className="flex items-center gap-4 mb-4"
           >
             <span className="h-px w-12 bg-emerald-500" />
-            <span className="text-emerald-500 font-mono text-xs tracking-[0.3em] uppercase">Cinematic Archive</span>
+            <span className="text-emerald-500 font-mono text-[10px] tracking-[0.5em] uppercase">Sovereign_Records</span>
+            <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[8px] font-mono text-emerald-500 uppercase tracking-widest">Live_Feed</span>
+            </div>
           </motion.div>
           <h2 className="text-5xl md:text-[12rem] font-black tracking-tighter text-white opacity-[0.03] leading-none absolute -top-8 left-12 select-none pointer-events-none whitespace-nowrap">
             {CONFIG.labels.projectsTitle}
@@ -255,34 +494,42 @@ const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => {
           className="absolute bottom-12 right-12 md:right-24 z-10 flex items-center gap-6"
         >
           <div className="flex flex-col items-end">
-            <span className="text-emerald-500 font-mono text-xs tracking-widest uppercase">Archive_Status</span>
-            <span className="text-white font-bold text-xl tracking-tighter">0{displayIndex} / 0{projects.length} PROJECTS</span>
+            <span className="text-emerald-500 font-mono text-[10px] tracking-[0.4em] uppercase opacity-50 mb-1">Status_Online</span>
+            <div className="flex items-baseline gap-2">
+              <span className="text-white font-black text-4xl tracking-tighter">0{displayIndex}</span>
+              <span className="text-zinc-600 font-mono text-xs">/ 0{projects.length}</span>
+            </div>
           </div>
-          <div className="h-12 w-px bg-zinc-800" />
-          <div className="w-16 h-16 rounded-full border border-zinc-800 flex items-center justify-center relative">
-            <svg className="w-full h-full -rotate-90">
+          <div className="h-12 w-px bg-zinc-800/50" />
+          <div className="w-14 h-14 rounded-full border border-zinc-800/50 flex items-center justify-center relative bg-black/40 backdrop-blur-sm">
+            <svg className="w-full h-full -rotate-90 p-1">
               <circle
-                cx="32"
-                cy="32"
-                r="30"
+                cx="24"
+                cy="24"
+                r="22"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1"
                 className="text-zinc-800"
+                style={{ transform: "scale(1.15)", transformOrigin: "center" }}
               />
               <motion.circle
-                cx="32"
-                cy="32"
-                r="30"
+                cx="24"
+                cy="24"
+                r="22"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
-                strokeDasharray="188.5"
-                style={{ strokeDashoffset: useTransform(scrollYProgress, [0, 1], [188.5, 0]) }}
+                strokeDasharray="138.2"
+                style={{ 
+                  strokeDashoffset: useTransform(scrollYProgress, [0, 1], [138.2, 0]),
+                  transform: "scale(1.15)",
+                  transformOrigin: "center"
+                }}
                 className="text-emerald-500"
               />
             </svg>
-            <span className="absolute text-[10px] font-mono text-emerald-500">
+            <span className="absolute text-[10px] font-mono text-emerald-500 font-bold">
               {Math.round(displayIndex / projects.length * 100)}%
             </span>
           </div>
@@ -318,6 +565,7 @@ const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => {
 export default function Home() {
   const [displayProjects, setDisplayProjects] = useState<GitHubRepo[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isBooted, setIsBooted] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -344,49 +592,39 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative min-h-screen selection:bg-emerald-500/30 bg-black text-zinc-200 overflow-x-hidden">
-      {/* Cinematic Background Elements */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <motion.div 
-          style={{ y: y1, rotate: rotate1 }}
-          className="absolute -top-[20%] -right-[10%] w-[100vw] h-[100vw] bg-emerald-500/5 blur-[150px] rounded-full"
-        />
-        <motion.div 
-          style={{ y: y2, rotate: rotate2 }}
-          className="absolute top-[10%] -left-[20%] w-[80vw] h-[80vw] bg-blue-500/5 blur-[150px] rounded-full"
-        />
-        
-        {/* Animated Noise/Grain */}
-        <motion.div 
-          animate={{ 
-            opacity: [0.1, 0.15, 0.1],
-            scale: [1, 1.05, 1]
-          }}
-          transition={{ 
-            duration: 4, 
-            repeat: Infinity, 
-            ease: "linear" 
-          }}
-          className="absolute inset-0 opacity-[0.15] mix-blend-overlay"
-        >
-          <svg className="w-full h-full">
-            <filter id="noiseFilter">
-              <feTurbulence 
-                type="fractalNoise" 
-                baseFrequency="0.6" 
-                numOctaves="3" 
-                stitchTiles="stitch" />
-            </filter>
-            <rect width="100%" height="100%" filter="url(#noiseFilter)" />
-          </svg>
-        </motion.div>
-      </div>
+    <div className="bg-black">
+      <AnimatePresence>
+        {!isBooted && <LoadingScreen onComplete={() => setIsBooted(true)} />}
+      </AnimatePresence>
 
-      {/* Scroll Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-emerald-500 origin-left z-50 shadow-[0_0_15px_rgba(16,185,129,0.5)]"
-        style={{ scaleX }}
-      />
+      <CustomCursor />
+      
+      {/* Global Cinematic Elements */}
+      <div className="noise-overlay" />
+      <div className="scanline" />
+      
+      <main className={`relative min-h-screen selection:bg-emerald-500/30 bg-black text-zinc-200 overflow-x-hidden transition-opacity duration-1000 ${isBooted ? 'opacity-100' : 'opacity-0'}`}>
+        {/* Cinematic Background Elements */}
+        <div className="fixed inset-0 pointer-events-none z-0">
+          <motion.div 
+            style={{ y: y1, rotate: rotate1 }}
+            className="absolute -top-[20%] -right-[10%] w-[100vw] h-[100vw] bg-emerald-500/5 blur-[150px] rounded-full"
+          />
+          <motion.div 
+            style={{ y: y2, rotate: rotate2 }}
+            className="absolute top-[10%] -left-[20%] w-[80vw] h-[80vw] bg-blue-500/5 blur-[150px] rounded-full"
+          />
+        </div>
+
+        {/* Cinematic Framing (Letterbox) */}
+        <div className="fixed inset-x-0 top-0 h-12 bg-gradient-to-b from-black to-transparent z-[60] pointer-events-none opacity-50" />
+        <div className="fixed inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black to-transparent z-[60] pointer-events-none opacity-50" />
+
+        {/* Scroll Progress Bar */}
+        <motion.div
+          className="fixed top-0 left-0 right-0 h-1 bg-emerald-500 origin-left z-[70] shadow-[0_0_15px_rgba(16,185,129,0.5)]"
+          style={{ scaleX }}
+        />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-32 pb-20 px-6 overflow-hidden">
@@ -418,23 +656,28 @@ export default function Home() {
 
             <div className="space-y-4 mb-12">
               <div className="overflow-hidden">
-                <motion.h1 
-                  className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] bg-gradient-to-b from-white via-white to-zinc-500 bg-clip-text text-transparent"
+                <motion.div 
                   initial={{ y: "100%" }}
                   animate={{ y: 0 }}
                   transition={{ delay: 0.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  {CONFIG.name.split(' ')[0]}
-                </motion.h1>
+                  <GlitchText 
+                    text={CONFIG.name.split(' ')[0]} 
+                    className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] bg-gradient-to-b from-white via-white to-zinc-500 bg-clip-text text-transparent" 
+                  />
+                </motion.div>
               </div>
               <div className="overflow-hidden">
-                <motion.h1 
-                  className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] text-white flex items-center gap-8"
+                <motion.div 
+                  className="flex items-center gap-8"
                   initial={{ y: "100%" }}
                   animate={{ y: 0 }}
                   transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  {CONFIG.name.split(' ')[1]}
+                  <GlitchText 
+                    text={CONFIG.name.split(' ')[1]} 
+                    className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] text-white" 
+                  />
                   <motion.span 
                     initial={{ scale: 0, rotate: -180 }}
                     animate={{ scale: 1, rotate: 0 }}
@@ -443,7 +686,7 @@ export default function Home() {
                   >
                     <Sparkles className="w-16 h-16 text-emerald-500" />
                   </motion.span>
-                </motion.h1>
+                </motion.div>
               </div>
             </div>
 
@@ -682,5 +925,6 @@ export default function Home() {
         </div>
       </footer>
     </main>
+  </div>
   );
 }
