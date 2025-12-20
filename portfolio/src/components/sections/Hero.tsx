@@ -4,21 +4,33 @@ import { motion } from "framer-motion";
 import { Linkedin, Github, Sparkles, MoveRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { CONFIG } from "@/lib/constants";
 import { GlitchText } from "../ui/GlitchText";
 
 export const Hero = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center pt-32 pb-20 px-6 overflow-hidden">
       {/* Light Leak Effect */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
         <motion.div 
-          animate={{ 
+          animate={isMobile ? {
+            opacity: [0.3, 0.4, 0.3],
+          } : { 
             opacity: [0.3, 0.5, 0.3],
             x: [-20, 20, -20],
             y: [-20, 20, -20]
           }}
-          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: isMobile ? 5 : 10, repeat: Infinity, ease: "linear" }}
           className="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] light-leak"
         />
       </div>
@@ -42,6 +54,7 @@ export const Hero = () => {
                 alt="Wesley Quintero Logo" 
                 width={64} 
                 height={64} 
+                priority
                 className="relative rounded-xl border border-zinc-800 p-2 bg-zinc-900 shadow-[0_0_30px_rgba(16,185,129,0.1)]"
               />
             </div>

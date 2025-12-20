@@ -63,7 +63,7 @@ const ProjectCard = ({ project, index }: { project: GitHubRepo; index: number })
         rotateY: isMobile ? 0 : rotateYTransform,
         transformStyle: "preserve-3d"
       }}
-      className="group relative h-[500px] w-[320px] md:w-[600px] overflow-hidden rounded-[2.5rem] bg-zinc-900/20 border border-zinc-800/30 flex-shrink-0 hover:border-emerald-500/40 transition-all duration-700 backdrop-blur-md"
+      className="group relative h-[500px] w-[320px] md:w-[600px] overflow-hidden rounded-[2.5rem] bg-zinc-900/20 border border-zinc-800/30 flex-shrink-0 hover:border-emerald-500/40 transition-all duration-700 backdrop-blur-sm md:backdrop-blur-md"
     >
       <motion.div 
         className="absolute inset-0 z-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"

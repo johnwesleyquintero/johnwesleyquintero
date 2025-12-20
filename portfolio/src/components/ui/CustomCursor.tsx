@@ -9,6 +9,10 @@ export const CustomCursor = () => {
   const cursorY = useSpring(0, { stiffness: 500, damping: 28 });
 
   useEffect(() => {
+    // Check if it's a touch device
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouchDevice) return;
+
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
