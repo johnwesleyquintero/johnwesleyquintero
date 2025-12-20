@@ -11,7 +11,7 @@ export const CONFIG = {
   githubUsername: "johnwesleyquintero",
   email: "johnwesleyquintero@gmail.com",
   socials: {
-    linkedin: "https://linkedin.com/in/wesleyquintero",
+    linkedin: "https://linkedin.com/in/johnwesleyquintero",
     github: "https://github.com/johnwesleyquintero",
   },
   revalidateTime: 3600, // 1 hour
