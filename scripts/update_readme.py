@@ -66,7 +66,6 @@ def update_readme():
         url = repo['url']
         # Use our high-impact description if it exists, otherwise use GitHub's
         desc = descriptions.get(name, repo.get('description') or "No description provided.")
-        stars = repo['stargazerCount']
         lang = (repo.get('primaryLanguage') or {}).get('name') or "N/A"
         homepage = repo.get('homepageUrl')
 
@@ -74,7 +73,7 @@ def update_readme():
         if homepage:
             markdown_lines.append(f"*   **Live Demo/Docs:** [{homepage}]({homepage})")
         markdown_lines.append(f"*   {desc}")
-        markdown_lines.append(f"*   **Stars:** {stars} | **Language:** {lang}\n")
+        markdown_lines.append(f"*   **Language:** {lang}\n")
 
     project_list_content = "\n".join(markdown_lines)
 

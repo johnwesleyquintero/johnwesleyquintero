@@ -50,27 +50,27 @@ I am a **Systems-First Architect** and **Educator** dedicated to creating indepe
 <!-- START_PROJECT_LIST -->
 ### 📌 [WesBI](https://github.com/johnwesleyquintero/WesBI)
 *   **An operator-grade intelligence cockpit for real-time Amazon decision-making.**
-*   **Stars:** 3 | **Language:** TypeScript
+*   **Language:** TypeScript
 
 ### 📌 [Buy-Box-Master](https://github.com/johnwesleyquintero/Buy-Box-Master)
 *   A strategic analysis engine for evaluating FBM marketplace competitiveness.
-*   **Stars:** 1 | **Language:** TypeScript
+*   **Language:** TypeScript
 
 ### 📌 [MyOps](https://github.com/johnwesleyquintero/MyOps)
 *   A strategic task execution system built to bridge operational gaps with code.
-*   **Stars:** 1 | **Language:** TypeScript
+*   **Language:** TypeScript
 
 ### 📌 [zerotrace](https://github.com/johnwesleyquintero/zerotrace)
 *   A transparent Windows utility for zero-footprint system maintenance.
-*   **Stars:** 1 | **Language:** Batchfile
+*   **Language:** Batchfile
 
 ### 📌 [Lax](https://github.com/johnwesleyquintero/Lax)
 *   A sovereign communications architecture for high-stakes operational teams.
-*   **Stars:** 1 | **Language:** TypeScript
+*   **Language:** TypeScript
 
 ### 📌 [wesai-genx](https://github.com/johnwesleyquintero/wesai-genx)
 *   An AI force multiplier and strategic partner for creative system-building.
-*   **Stars:** 1 | **Language:** TypeScript
+*   **Language:** TypeScript
 <!-- END_PROJECT_LIST -->
 
 ---
