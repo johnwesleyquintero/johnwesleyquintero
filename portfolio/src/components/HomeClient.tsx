@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { type GitHubRepo } from "@/lib/github";
 import dynamic from "next/dynamic";
 
@@ -37,16 +37,23 @@ interface HomeClientProps {
   initialProjects: GitHubRepo[];
 }
 
-export function HomeClient({ initialProjects }: HomeClientProps) {
-  const [isBooted, setIsBooted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+// Helper stores for React 18/19 hydration-safe client-only values
+const subscribeResize = (callback: () => void) => {
+  window.addEventListener('resize', callback);
+  return () => window.removeEventListener('resize', callback);
+};
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+const getIsMobileSnapshot = () => window.innerWidth < 768;
+const getServerIsMobileSnapshot = () => false;
+
+const emptySubscribe = () => () => {};
+const getMountedSnapshot = () => true;
+const getServerMountedSnapshot = () => false;
+
+export function HomeClient({ initialProjects }: HomeClientProps) {
+  const mounted = useSyncExternalStore(emptySubscribe, getMountedSnapshot, getServerMountedSnapshot);
+  const isMobile = useSyncExternalStore(subscribeResize, getIsMobileSnapshot, getServerIsMobileSnapshot);
+  const [isBooted, setIsBooted] = useState(false);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -60,6 +67,11 @@ export function HomeClient({ initialProjects }: HomeClientProps) {
   const y2 = useTransform(scrollYProgress, [0, 1], [0, isMobile ? -200 : -600]);
   const rotate1 = useTransform(scrollYProgress, [0, 1], [0, isMobile ? 45 : 90]);
   const rotate2 = useTransform(scrollYProgress, [0, 1], [0, isMobile ? -20 : -45]);
+  const letterboxScale = useTransform(scrollYProgress, [0, 0.1], [1, 0.5]);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className="bg-black">
@@ -93,11 +105,11 @@ export function HomeClient({ initialProjects }: HomeClientProps) {
         {/* Cinematic Framing (Letterbox) */}
         <motion.div 
           className="fixed inset-x-0 top-0 h-8 md:h-12 bg-black z-[90] pointer-events-none origin-top"
-          style={{ scaleY: useTransform(scrollYProgress, [0, 0.1], [1, 0.5]) }}
+          style={{ scaleY: letterboxScale }}
         />
         <motion.div 
           className="fixed inset-x-0 bottom-0 h-8 md:h-12 bg-black z-[90] pointer-events-none origin-bottom"
-          style={{ scaleY: useTransform(scrollYProgress, [0, 0.1], [1, 0.5]) }}
+          style={{ scaleY: letterboxScale }}
         />
 
         <div className="fixed inset-x-0 top-0 h-24 bg-gradient-to-b from-black to-transparent z-[60] pointer-events-none opacity-50" />
