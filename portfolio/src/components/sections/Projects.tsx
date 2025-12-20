@@ -7,6 +7,7 @@ import { useEffect, useState, useRef } from "react";
 import { type GitHubRepo } from "@/lib/github";
 import { CONFIG } from "@/lib/constants";
 import { ProjectIcon } from "../ui/ProjectIcon";
+import { ScrollIndicator } from "../ui/ScrollIndicator";
 
 const ProjectCard = ({ project, index }: { project: GitHubRepo; index: number }) => {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -214,23 +215,19 @@ export const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => 
     });
   }, [currentIndex, projects.length]);
 
+  const indicatorOpacity = useTransform(scrollYProgress, [0, 0.05], [0.6, 0]);
+
   return (
     <section ref={targetRef} className="relative bg-black" style={{ height: `${(projects.length + 2) * 100}vh` }}>
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
         <div className="absolute inset-0 z-0 bg-black" />
         
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 0.5 }}
-          className="absolute bottom-32 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 md:hidden z-30 pointer-events-none"
-        >
-          <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-500">Scroll to explore</span>
-          <motion.div 
-            animate={{ y: [0, 5, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-px h-8 bg-emerald-500/50"
-          />
-        </motion.div>
+        <ScrollIndicator 
+          className="absolute bottom-32 left-1/2 -translate-x-1/2 z-30" 
+          hideOnDesktop 
+          opacityOverride={indicatorOpacity}
+          textColor="text-emerald-500"
+        />
 
         <motion.div 
           animate={{ 

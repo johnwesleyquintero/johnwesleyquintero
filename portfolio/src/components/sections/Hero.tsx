@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { CONFIG } from "@/lib/constants";
 import { GlitchText } from "../ui/GlitchText";
 
+import { ScrollIndicator } from "../ui/ScrollIndicator";
+
 export const Hero = () => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -151,15 +153,7 @@ export const Hero = () => {
         </motion.div>
       </div>
 
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
-      >
-        <span className="text-[10px] font-mono uppercase tracking-[0.5em] text-zinc-600">Scroll to explore</span>
-        <div className="w-px h-12 bg-gradient-to-b from-emerald-500 to-transparent" />
-      </motion.div>
+      <ScrollIndicator className="absolute bottom-12 left-1/2 -translate-x-1/2" />
     </section>
   );
 };
