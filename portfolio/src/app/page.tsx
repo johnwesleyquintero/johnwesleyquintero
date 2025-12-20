@@ -63,22 +63,44 @@ const ProjectCard = ({ project, index }: { project: GitHubRepo; index: number })
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ x: mouseX, y: mouseY, rotateX: useTransform(mouseY, [-20, 20], [10, -10]), rotateY: useTransform(mouseX, [-20, 20], [-10, 10]) }}
-      className="group relative h-[450px] w-[350px] md:w-[500px] overflow-hidden rounded-3xl bg-zinc-900/40 border border-zinc-800/50 flex-shrink-0 transition-all duration-500 hover:border-emerald-500/30 hover:shadow-[0_0_50px_rgba(16,185,129,0.1)] perspective-1000"
+      style={{ 
+        x: mouseX, 
+        y: mouseY, 
+        rotateX: useTransform(mouseY, [-20, 20], [15, -15]), 
+        rotateY: useTransform(mouseX, [-20, 20], [-15, 15]),
+        transformStyle: "preserve-3d"
+      }}
+      className="group relative h-[450px] w-[350px] md:w-[500px] overflow-hidden rounded-3xl bg-zinc-900/40 border border-zinc-800/50 flex-shrink-0 hover:border-emerald-500/30 hover:shadow-[0_0_50px_rgba(16,185,129,0.1)] perspective-1000"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+      <div 
+        className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" 
+        style={{ transform: "translateZ(20px)" }}
+      />
       
       {/* Floating Index Background */}
-      <div className="absolute -bottom-12 -right-12 text-[20rem] font-black text-white/[0.02] select-none pointer-events-none transition-transform duration-700 group-hover:-translate-y-8 group-hover:-translate-x-8">
+      <div 
+        className="absolute -bottom-12 -right-12 text-[20rem] font-black text-white/[0.02] select-none pointer-events-none transition-transform duration-700 group-hover:-translate-y-8 group-hover:-translate-x-8"
+        style={{ transform: "translateZ(10px)" }}
+      >
         {index + 1}
       </div>
 
-      <div className="relative h-full p-8 md:p-12 flex flex-col justify-between">
-        <motion.div style={{ x: useTransform(mouseX, (v) => v * 0.2), y: useTransform(mouseY, (v) => v * 0.2) }}>
-          <div className="mb-8 p-4 w-fit rounded-2xl bg-zinc-900 border border-zinc-800 text-emerald-400 group-hover:text-emerald-300 group-hover:scale-110 transition-all duration-500">
+      <div className="relative h-full p-8 md:p-12 flex flex-col justify-between" style={{ transform: "translateZ(50px)" }}>
+        <motion.div style={{ x: useTransform(mouseX, (v) => v * 0.1), y: useTransform(mouseY, (v) => v * 0.1) }}>
+          <motion.div 
+            className="mb-8 p-4 w-fit rounded-2xl bg-zinc-900 border border-zinc-800 text-emerald-400"
+            whileHover={{ scale: 1.1, color: "#6ee7b7" }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          >
             <ProjectIcon language={project.language} />
-          </div>
-          <h3 className="text-3xl font-bold mb-4 tracking-tight text-white group-hover:translate-x-2 transition-transform duration-500">{project.name}</h3>
+          </motion.div>
+          <motion.h3 
+            className="text-3xl font-bold mb-4 tracking-tight text-white"
+            whileHover={{ x: 8 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          >
+            {project.name}
+          </motion.h3>
           <p className="text-zinc-400 leading-relaxed text-lg font-medium line-clamp-3 group-hover:text-zinc-300 transition-colors duration-500">
             {project.description || "Deciphering complexity through code and operational excellence."}
           </p>
@@ -123,42 +145,69 @@ const ProjectCard = ({ project, index }: { project: GitHubRepo; index: number })
 };
 
 const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => {
-  const targetRef = useRef(null);
+  const targetRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollRange, setScrollRange] = useState(0);
+
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ["start start", "end end"]
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-70%"]);
+  useEffect(() => {
+    const updateScrollRange = () => {
+      if (scrollRef.current) {
+        // Calculate how much we need to scroll: Total content width - viewport width
+        setScrollRange(scrollRef.current.scrollWidth - window.innerWidth);
+      }
+    };
+
+    updateScrollRange();
+    window.addEventListener('resize', updateScrollRange);
+    return () => window.removeEventListener('resize', updateScrollRange);
+  }, [projects.length]);
+
+  const x = useTransform(scrollYProgress, [0, 1], [0, -scrollRange]);
   const springX = useSpring(x, { stiffness: 100, damping: 30, restDelta: 0.001 });
   
   // Cinematic Velocity-based Skew
   const scrollVelocity = useVelocity(scrollYProgress);
-  const skewXRaw = useTransform(scrollVelocity, [-0.5, 0.5], [-15, 15]);
+  const skewXRaw = useTransform(scrollVelocity, [-0.5, 0.5], [-10, 10]);
   const skewX = useSpring(skewXRaw, { stiffness: 400, damping: 90 });
   
-  const opacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.05, 0.95, 1], [0, 1, 1, 0]);
   const glowColor = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
     ["rgba(16, 185, 129, 0.05)", "rgba(59, 130, 246, 0.05)", "rgba(16, 185, 129, 0.05)"]
   );
 
+  // Calculate current project index based on scroll
+  const currentIndex = useTransform(scrollYProgress, [0, 1], [1, projects.length]);
+  const [displayIndex, setDisplayIndex] = useState(1);
+  
+  useEffect(() => {
+    return currentIndex.on("change", (latest) => {
+      setDisplayIndex(Math.min(projects.length, Math.max(1, Math.round(latest))));
+    });
+  }, [currentIndex, projects.length]);
+
   return (
-    <section ref={targetRef} className="relative h-[500vh] bg-black">
+    <section ref={targetRef} className="relative bg-black" style={{ height: `${(projects.length + 2) * 100}vh` }}>
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        {/* Scanning Line Effect */}
+        {/* ... scanning line ... */}
         <motion.div 
           animate={{ 
             top: ["0%", "100%", "0%"],
-            opacity: [0.1, 0.3, 0.1]
+            opacity: [0.05, 0.2, 0.05],
+            boxShadow: ["0 0 0px rgba(16,185,129,0)", "0 0 20px rgba(16,185,129,0.4)", "0 0 0px rgba(16,185,129,0)"]
           }}
           transition={{ 
-            duration: 10, 
+            duration: 6, 
             repeat: Infinity, 
-            ease: "linear" 
+            ease: "easeInOut" 
           }}
-          className="absolute left-0 right-0 h-[2px] bg-emerald-500/30 z-30 pointer-events-none blur-[1px]"
+          className="absolute left-0 right-0 h-[1px] bg-emerald-500/50 z-30 pointer-events-none blur-[0.5px]"
         />
 
         {/* Background Decorative Element */}
@@ -172,8 +221,8 @@ const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => {
           />
           
           {/* Animated Grid Pattern */}
-          <div className="absolute inset-0 opacity-[0.1]" 
-               style={{ backgroundImage: 'radial-gradient(#10b981 0.5px, transparent 0.5px)', backgroundSize: '40px 40px' }} 
+          <div className="absolute inset-0 opacity-[0.05]" 
+               style={{ backgroundImage: 'radial-gradient(#10b981 0.5px, transparent 0.5px)', backgroundSize: '60px 60px' }} 
           />
           
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.8)_100%)]" />
@@ -207,7 +256,7 @@ const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => {
         >
           <div className="flex flex-col items-end">
             <span className="text-emerald-500 font-mono text-xs tracking-widest uppercase">Archive_Status</span>
-            <span className="text-white font-bold text-xl tracking-tighter">0{projects.length} PROJECTS_LOADED</span>
+            <span className="text-white font-bold text-xl tracking-tighter">0{displayIndex} / 0{projects.length} PROJECTS</span>
           </div>
           <div className="h-12 w-px bg-zinc-800" />
           <div className="w-16 h-16 rounded-full border border-zinc-800 flex items-center justify-center relative">
@@ -234,12 +283,16 @@ const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => {
               />
             </svg>
             <span className="absolute text-[10px] font-mono text-emerald-500">
-              {projects.length}
+              {Math.round(displayIndex / projects.length * 100)}%
             </span>
           </div>
         </motion.div>
 
-        <motion.div style={{ x: springX, skewX, opacity }} className="flex gap-12 px-6 md:px-24 relative z-20">
+        <motion.div 
+          ref={scrollRef}
+          style={{ x: springX, skewX, opacity }} 
+          className="flex gap-12 px-6 md:px-24 relative z-20 w-fit"
+        >
           {projects.map((project, idx) => (
             <ProjectCard key={project.name} project={project} index={idx} />
           ))}
@@ -273,9 +326,10 @@ export default function Home() {
   });
 
   // Background parallax elements
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -200]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, -500]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [0, 45]);
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, -300]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, -600]);
+  const rotate1 = useTransform(scrollYProgress, [0, 1], [0, 90]);
+  const rotate2 = useTransform(scrollYProgress, [0, 1], [0, -45]);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -294,23 +348,38 @@ export default function Home() {
       {/* Cinematic Background Elements */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <motion.div 
-          style={{ y: y1, rotate }}
-          className="absolute -top-[10%] -right-[10%] w-[80vw] h-[80vw] bg-emerald-500/5 blur-[120px] rounded-full"
+          style={{ y: y1, rotate: rotate1 }}
+          className="absolute -top-[20%] -right-[10%] w-[100vw] h-[100vw] bg-emerald-500/5 blur-[150px] rounded-full"
         />
         <motion.div 
-          style={{ y: y2, rotate: -rotate }}
-          className="absolute top-[20%] -left-[10%] w-[60vw] h-[60vw] bg-blue-500/5 blur-[120px] rounded-full"
+          style={{ y: y2, rotate: rotate2 }}
+          className="absolute top-[10%] -left-[20%] w-[80vw] h-[80vw] bg-blue-500/5 blur-[150px] rounded-full"
         />
-        <svg className="absolute inset-0 w-full h-full opacity-[0.15] mix-blend-overlay">
-          <filter id="noiseFilter">
-            <feTurbulence 
-              type="fractalNoise" 
-              baseFrequency="0.6" 
-              numOctaves="3" 
-              stitchTiles="stitch" />
-          </filter>
-          <rect width="100%" height="100%" filter="url(#noiseFilter)" />
-        </svg>
+        
+        {/* Animated Noise/Grain */}
+        <motion.div 
+          animate={{ 
+            opacity: [0.1, 0.15, 0.1],
+            scale: [1, 1.05, 1]
+          }}
+          transition={{ 
+            duration: 4, 
+            repeat: Infinity, 
+            ease: "linear" 
+          }}
+          className="absolute inset-0 opacity-[0.15] mix-blend-overlay"
+        >
+          <svg className="w-full h-full">
+            <filter id="noiseFilter">
+              <feTurbulence 
+                type="fractalNoise" 
+                baseFrequency="0.6" 
+                numOctaves="3" 
+                stitchTiles="stitch" />
+            </filter>
+            <rect width="100%" height="100%" filter="url(#noiseFilter)" />
+          </svg>
+        </motion.div>
       </div>
 
       {/* Scroll Progress Bar */}
