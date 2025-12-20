@@ -49,6 +49,13 @@ Here are some of the technologies and tools I work with regularly:
 
 ---
 
+## ✨ Featured Projects
+
+<!-- START_PROJECT_LIST -->
+*This section is automatically updated based on my pinned repositories. Manual changes will be overwritten.*
+<!-- END_PROJECT_LIST -->
+
+---
 
 ## 📈 GitHub Stats
 

@@ -51,10 +51,10 @@ jobs:
             }' -f login='${{ github.repository_owner }}' --jq '.data.user.pinnedItems.nodes')
 
           markdown_list=$(echo "$pinned_repos_json" | jq -r '.[] |
-            "### 📌 [\(.name)](\\(.url))\n" +
-            (if .homepageUrl and (.homepageUrl | length > 0) then "*   **Live Demo/Docs:** [\(.homepageUrl)](\\(.homepageUrl))\n" else "" end) +
-            "*   \(.description // "No description provided.")\n" +
-            "*   **Stars:** \(.stargazerCount) | **Language:** \(.primaryLanguage.name // "N/A")\n"
+            "### 📌 [\(.name)](\(.url))\n" +
+            (if .homepageUrl and (.homepageUrl | length > 0) then "*   **Live Demo/Docs:** [\(.homepageUrl)](\(.homepageUrl))\n" else "" end) +
+            "*   \(.description // \"No description provided.\")\n" +
+            "*   **Stars:** \(.stargazerCount) | **Language:** \(.primaryLanguage.name // \"N/A\")\n"
           ')
 
           markdown_list="${markdown_list//'%'/'%25'}"
