@@ -13,9 +13,15 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     background-color: var(--background);
     color: var(--foreground);
-    @apply antialiased;
+    @apply antialiased overflow-x-hidden;
+  }
+  ::selection {
+    @apply bg-emerald-500/30 text-emerald-200;
   }
 }
