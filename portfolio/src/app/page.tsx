@@ -58,6 +58,9 @@ export default function Home() {
       <div className="noise-overlay" />
       <div className="scanline" />
       
+      {/* Cinematic Color Grade */}
+      <div className="fixed inset-0 pointer-events-none z-[100] bg-emerald-500/5 mix-blend-overlay" />
+      
       <main className={`relative min-h-screen selection:bg-emerald-500/30 bg-black text-zinc-200 overflow-x-hidden transition-opacity duration-1000 ${isBooted ? 'opacity-100' : 'opacity-0'}`}>
         {/* Cinematic Background Elements */}
         <div className="fixed inset-0 pointer-events-none z-0">
@@ -69,11 +72,21 @@ export default function Home() {
             style={{ y: y2, rotate: rotate2 }}
             className="absolute top-[10%] -left-[20%] w-[80vw] h-[80vw] bg-blue-500/5 blur-[150px] rounded-full"
           />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.8)_100%)]" />
         </div>
 
         {/* Cinematic Framing (Letterbox) */}
-        <div className="fixed inset-x-0 top-0 h-12 bg-gradient-to-b from-black to-transparent z-[60] pointer-events-none opacity-50" />
-        <div className="fixed inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black to-transparent z-[60] pointer-events-none opacity-50" />
+        <motion.div 
+          className="fixed inset-x-0 top-0 h-8 md:h-12 bg-black z-[90] pointer-events-none origin-top"
+          style={{ scaleY: useTransform(scrollYProgress, [0, 0.1], [1, 0.5]) }}
+        />
+        <motion.div 
+          className="fixed inset-x-0 bottom-0 h-8 md:h-12 bg-black z-[90] pointer-events-none origin-bottom"
+          style={{ scaleY: useTransform(scrollYProgress, [0, 0.1], [1, 0.5]) }}
+        />
+
+        <div className="fixed inset-x-0 top-0 h-24 bg-gradient-to-b from-black to-transparent z-[60] pointer-events-none opacity-50" />
+        <div className="fixed inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black to-transparent z-[60] pointer-events-none opacity-50" />
 
         {/* Scroll Progress Bar */}
         <motion.div

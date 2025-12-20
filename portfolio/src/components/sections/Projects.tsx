@@ -63,42 +63,45 @@ const ProjectCard = ({ project, index }: { project: GitHubRepo; index: number })
         rotateY: isMobile ? 0 : rotateYTransform,
         transformStyle: "preserve-3d"
       }}
-      className="group relative h-[450px] w-[300px] md:w-[500px] overflow-hidden rounded-3xl bg-zinc-900/40 border border-zinc-800/50 flex-shrink-0 hover:border-emerald-500/30 hover:shadow-[0_0_50px_rgba(16,185,129,0.1)] transition-all duration-500"
+      className="group relative h-[500px] w-[320px] md:w-[600px] overflow-hidden rounded-[2.5rem] bg-zinc-900/20 border border-zinc-800/30 flex-shrink-0 hover:border-emerald-500/40 transition-all duration-700 backdrop-blur-md"
     >
       <motion.div 
-        className="absolute inset-0 z-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className="absolute inset-0 z-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
         style={{
           background: useTransform(
             [spotlightX, spotlightY],
-            ([x, y]) => `radial-gradient(600px circle at ${x}px ${y}px, rgba(16, 185, 129, 0.08), transparent 40%)`
+            ([x, y]) => `radial-gradient(800px circle at ${x}px ${y}px, rgba(16, 185, 129, 0.12), transparent 40%)`
           )
         }}
       />
 
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+      {/* Cinematic Vignette for Card */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)] z-10 pointer-events-none" />
+      
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
       
       <div 
-        className="absolute -bottom-12 -right-12 text-[20rem] font-black text-white/[0.02] select-none pointer-events-none transition-transform duration-700 group-hover:-translate-y-8 group-hover:-translate-x-8"
+        className="absolute -bottom-16 -right-16 text-[25rem] font-black text-white/[0.015] select-none pointer-events-none transition-transform duration-1000 group-hover:-translate-y-12 group-hover:-translate-x-12"
         style={{ transform: "translateZ(10px)" }}
       >
         {index + 1}
       </div>
 
-      <div className="relative h-full p-8 md:p-12 flex flex-col justify-between" style={{ transform: "translateZ(50px)" }}>
-        <motion.div style={{ x: useTransform(mouseX, (v) => v * 0.1), y: useTransform(mouseY, (v) => v * 0.1) }}>
+      <div className="relative h-full p-10 md:p-16 flex flex-col justify-between z-20" style={{ transform: "translateZ(50px)" }}>
+        <motion.div style={{ x: useTransform(mouseX, (v) => v * 0.05), y: useTransform(mouseY, (v) => v * 0.05) }}>
           <motion.div 
-            className="mb-8 p-4 w-fit rounded-2xl bg-zinc-900 border border-zinc-800 text-emerald-400"
-            whileHover={{ scale: 1.1, color: "#6ee7b7" }}
+            className="mb-10 p-5 w-fit rounded-2xl bg-zinc-950 border border-zinc-800 text-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.1)]"
+            whileHover={{ scale: 1.1, color: "#10b981", boxShadow: "0_0_30px_rgba(16,185,129,0.3)" }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
             <ProjectIcon language={project.language} />
           </motion.div>
           <motion.h3 
-            className="text-3xl font-bold mb-4 tracking-tight text-white"
-            whileHover={{ x: 8 }}
+            className="text-4xl md:text-5xl font-black mb-6 tracking-tighter text-white leading-none"
+            whileHover={{ x: 10 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
-            {project.name}
+            {project.name.replace(/-/g, ' ')}
           </motion.h3>
           <p className="text-zinc-400 leading-relaxed text-lg font-medium line-clamp-3 group-hover:text-zinc-300 transition-colors duration-500">
             {project.description || "Deciphering complexity through code and operational excellence."}
@@ -108,11 +111,11 @@ const ProjectCard = ({ project, index }: { project: GitHubRepo; index: number })
         <div className="space-y-8">
           <div className="flex flex-wrap gap-2">
             {project.language && (
-              <span className="text-[10px] px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 font-mono border border-zinc-700/50">
+              <span className="text-[10px] px-3 py-1 rounded-full bg-zinc-800 text-zinc-300 font-mono border border-zinc-700/50 uppercase tracking-widest">
                 {project.language}
               </span>
             )}
-            <span className="text-[10px] px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 font-mono border border-emerald-500/20 uppercase tracking-tighter">
+            <span className="text-[10px] px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 font-mono border border-emerald-500/20 uppercase tracking-[0.2em]">
               STARS_{project.stargazers_count}
             </span>
           </div>
@@ -122,18 +125,18 @@ const ProjectCard = ({ project, index }: { project: GitHubRepo; index: number })
               href={project.html_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
+              className="flex items-center gap-2 text-xs font-bold font-mono tracking-[0.3em] text-emerald-500 hover:text-emerald-400 transition-all group/link"
             >
-              SOURCE_CODE <ArrowRight className="w-4 h-4" />
+              SOURCE_CODE <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
             </Link>
             {project.homepage && (
               <Link
                 href={project.homepage}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm font-bold text-zinc-400 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-xs font-bold font-mono tracking-[0.3em] text-zinc-500 hover:text-white transition-all group/link"
               >
-                LIVE_DEMO <ExternalLink className="w-4 h-4" />
+                LIVE_DEMO <ExternalLink className="w-4 h-4 group-hover/link:-translate-y-1 group-hover/link:translate-x-1 transition-transform" />
               </Link>
             )}
           </div>
