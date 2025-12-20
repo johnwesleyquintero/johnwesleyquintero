@@ -49,12 +49,23 @@ def update_readme():
         print("Make sure you are logged in with 'gh auth login'")
         return
 
+    # Mapping for high-impact project descriptions
+    descriptions = {
+        "WesBI": "**An operator-grade intelligence cockpit for real-time Amazon decision-making.**",
+        "Buy-Box-Master": "A strategic analysis engine for evaluating FBM marketplace competitiveness.",
+        "MyOps": "A strategic task execution system built to bridge operational gaps with code.",
+        "zerotrace": "A transparent Windows utility for zero-footprint system maintenance.",
+        "Lax": "A sovereign communications architecture for high-stakes operational teams.",
+        "wesai-genx": "An AI force multiplier and strategic partner for creative system-building."
+    }
+
     # 2. Format into Markdown
     markdown_lines = []
     for repo in nodes:
         name = repo['name']
         url = repo['url']
-        desc = repo.get('description') or "No description provided."
+        # Use our high-impact description if it exists, otherwise use GitHub's
+        desc = descriptions.get(name, repo.get('description') or "No description provided.")
         stars = repo['stargazerCount']
         lang = (repo.get('primaryLanguage') or {}).get('name') or "N/A"
         homepage = repo.get('homepageUrl')

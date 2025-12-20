@@ -3,8 +3,10 @@
   <h1 style="background: linear-gradient(135deg, #059669 0%, #06b6d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 15px 0; font-family: 'Inter', sans-serif; font-weight: 800;">
     Wesley Quintero
   </h1>
-  <p><strong>Operations Architect | Full-Stack Developer | E-commerce Strategist</strong></p>
+  <p><strong>Operations Architect | Full-Stack Developer | Systems Strategist</strong></p>
   <p><em>"Building sovereign digital systems and decoding complex operational challenges."</em></p>
+  
+  <p><strong>Systems over shortcuts. Documentation over memory.</strong></p>
   
   <p>
     <a href="https://linkedin.com/in/wesleyquintero"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
@@ -47,27 +49,27 @@ I am a **Systems-First Architect** and **Educator** dedicated to creating indepe
 ### ✨ Featured Projects
 <!-- START_PROJECT_LIST -->
 ### 📌 [WesBI](https://github.com/johnwesleyquintero/WesBI)
-*   An advanced PDA, managerial script for real-time Amazon operations insights.
+*   **An operator-grade intelligence cockpit for real-time Amazon decision-making.**
 *   **Stars:** 3 | **Language:** TypeScript
 
 ### 📌 [Buy-Box-Master](https://github.com/johnwesleyquintero/Buy-Box-Master)
-*   A lightweight manual tool designed to analyze basic FBM experts.
+*   A strategic analysis engine for evaluating FBM marketplace competitiveness.
 *   **Stars:** 1 | **Language:** TypeScript
 
 ### 📌 [MyOps](https://github.com/johnwesleyquintero/MyOps)
-*   MyOps is a strategic task execution system... [Google Sheets/Apps Script]
+*   A strategic task execution system built to bridge operational gaps with code.
 *   **Stars:** 1 | **Language:** TypeScript
 
 ### 📌 [zerotrace](https://github.com/johnwesleyquintero/zerotrace)
-*   A lightweight, transparent Windows cleanup utility that leaves zero trace.
+*   A transparent Windows utility for zero-footprint system maintenance.
 *   **Stars:** 1 | **Language:** Batchfile
 
 ### 📌 [Lax](https://github.com/johnwesleyquintero/Lax)
-*   A strategic, simple Slack clone for operations built with Next.js + Supabase.
+*   A sovereign communications architecture for high-stakes operational teams.
 *   **Stars:** 1 | **Language:** TypeScript
 
 ### 📌 [wesai-genx](https://github.com/johnwesleyquintero/wesai-genx)
-*   Your AI personal assistant, strategic partner, and creative force multiplier.
+*   An AI force multiplier and strategic partner for creative system-building.
 *   **Stars:** 1 | **Language:** TypeScript
 <!-- END_PROJECT_LIST -->
 
