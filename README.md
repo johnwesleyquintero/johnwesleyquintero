@@ -52,7 +52,29 @@ Here are some of the technologies and tools I work with regularly:
 ## ✨ Featured Projects
 
 <!-- START_PROJECT_LIST -->
-*This section is automatically updated based on my pinned repositories. Manual changes will be overwritten.*
+### 📌 [WesBI](https://github.com/johnwesleyquintero/WesBI)
+*   An advanced PDA, managerial script for real-time Amazon operations insights.
+*   **Stars:** 3 | **Language:** TypeScript
+
+### 📌 [Buy-Box-Master](https://github.com/johnwesleyquintero/Buy-Box-Master)
+*   A lightweight manual tool designed to analyze basic FBM experts.
+*   **Stars:** 1 | **Language:** TypeScript
+
+### 📌 [MyOps](https://github.com/johnwesleyquintero/MyOps)
+*   MyOps is a strategic task execution system... [Google Sheets/Apps Script]
+*   **Stars:** 1 | **Language:** TypeScript
+
+### 📌 [zerotrace](https://github.com/johnwesleyquintero/zerotrace)
+*   A lightweight, transparent Windows cleanup utility that leaves zero trace.
+*   **Stars:** 1 | **Language:** Batchfile
+
+### 📌 [Lax](https://github.com/johnwesleyquintero/Lax)
+*   A strategic, simple Slack clone for operations built with Next.js + Supabase.
+*   **Stars:** 1 | **Language:** TypeScript
+
+### 📌 [wesai-genx](https://github.com/johnwesleyquintero/wesai-genx)
+*   Your AI personal assistant, strategic partner, and creative force multiplier.
+*   **Stars:** 1 | **Language:** TypeScript
 <!-- END_PROJECT_LIST -->
 
 ---
