@@ -38,8 +38,8 @@ export default function Home() {
     const fetchProjects = async () => {
       const allProjects = await getGitHubProjects(CONFIG.githubUsername);
       const filtered = allProjects
-        .filter(repo => !repo.fork && repo.stargazers_count >= 1)
-        .slice(0, 6);
+        .filter(repo => !repo.fork) // Relaxed filter: show all non-forks
+        .slice(0, 8); // Show up to 8 projects
       setDisplayProjects(filtered);
       setLoading(false);
     };
@@ -61,7 +61,7 @@ export default function Home() {
       {/* Cinematic Color Grade */}
       <div className="fixed inset-0 pointer-events-none z-[100] bg-emerald-500/5 mix-blend-overlay" />
       
-      <main className={`relative min-h-screen selection:bg-emerald-500/30 bg-black text-zinc-200 overflow-x-hidden transition-opacity duration-1000 ${isBooted ? 'opacity-100' : 'opacity-0'}`}>
+      <main className={`relative min-h-screen selection:bg-emerald-500/30 bg-black text-zinc-200 transition-opacity duration-1000 ${isBooted ? 'opacity-100' : 'opacity-0'}`}>
         {/* Cinematic Background Elements */}
         <div className="fixed inset-0 pointer-events-none z-0">
           <motion.div 

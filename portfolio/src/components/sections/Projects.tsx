@@ -159,18 +159,42 @@ export const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => 
   useEffect(() => {
     const updateScrollRange = () => {
       if (scrollRef.current) {
-        const padding = window.innerWidth < 768 ? 48 : 192;
-        setScrollRange(scrollRef.current.scrollWidth - window.innerWidth + padding);
+        // The total width we can scroll is the width of the content minus the viewport width
+        // We add a little extra space at the end for the "Explore all repos" card to be fully visible with padding
+        const contentWidth = scrollRef.current.scrollWidth;
+        const viewportWidth = window.innerWidth;
+        setScrollRange(Math.max(0, contentWidth - viewportWidth));
       }
     };
 
+    const resizeObserver = new ResizeObserver(() => {
+      updateScrollRange();
+    });
+
+    if (scrollRef.current) {
+      resizeObserver.observe(scrollRef.current);
+    }
+
     updateScrollRange();
     window.addEventListener('resize', updateScrollRange);
-    return () => window.removeEventListener('resize', updateScrollRange);
+    
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', updateScrollRange);
+    };
   }, [projects.length]);
 
   const x = useTransform(scrollYProgress, [0, 1], [0, -scrollRange]);
-  const springX = useSpring(x, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  
+  // Update spring settings for smoother feel
+  const springX = useSpring(x, { stiffness: 50, damping: 20, restDelta: 0.001 });
+  
+  // Use a ref to store the latest scroll range to avoid unnecessary transforms
+  const scrollRangeRef = useRef(0);
+  useEffect(() => {
+    scrollRangeRef.current = scrollRange;
+  }, [scrollRange]);
+
   const scrollVelocity = useVelocity(scrollYProgress);
   const skewXRaw = useTransform(scrollVelocity, [-0.5, 0.5], [-10, 10]);
   const skewX = useSpring(skewXRaw, { stiffness: 400, damping: 90 });
@@ -282,7 +306,7 @@ export const HorizontalProjects = ({ projects }: { projects: GitHubRepo[] }) => 
           </div>
         </motion.div>
 
-        <motion.div ref={scrollRef} style={{ x: springX, skewX, opacity }} className="flex gap-12 px-6 md:px-24 relative z-20 w-fit">
+        <motion.div ref={scrollRef} style={{ x: springX, skewX, opacity }} className="flex gap-12 px-6 md:px-24 relative z-20 min-w-max">
           {projects.map((project, idx) => (
             <ProjectCard key={project.name} project={project} index={idx} />
           ))}

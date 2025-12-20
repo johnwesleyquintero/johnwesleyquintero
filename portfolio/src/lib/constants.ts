@@ -2,7 +2,7 @@ import { Shield, Globe, TrendingUp } from "lucide-react";
 import React from "react";
 
 export const CONFIG = {
-  name: "JOHN WESLEY QUINTERO",
+  name: "WESLEY QUINTERO",
   title: "WSLEY | PROFILE",
   description: "Operations Architect & Full-Stack Developer building sovereign digital systems.",
   role: "Operations Architect & Full-Stack Developer",
