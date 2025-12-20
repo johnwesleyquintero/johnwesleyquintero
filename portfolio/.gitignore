@@ -53,3 +53,6 @@ next-env.d.ts
 !.vscode/settings.json
 !.vscode/extensions.json
 !.vscode/launch.json
+
+# feedback
+Feedback.md
